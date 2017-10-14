@@ -49,11 +49,20 @@ public class TripService extends Service {
 
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        toSpeech.stop();
+    }
+
     public static void say(String text, TalkPromise promise) {
         singleton.progressListener.promise = promise;
         String utteranceId = singleton.hashCode() + "";
         singleton.toSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, utteranceId);
+    }
 
+    public static void stop() {
+        singleton.toSpeech.stop();
     }
 
     private class MyUtteranceProgressListener extends UtteranceProgressListener {
@@ -75,4 +84,5 @@ public class TripService extends Service {
 
         }
     }
+
 }

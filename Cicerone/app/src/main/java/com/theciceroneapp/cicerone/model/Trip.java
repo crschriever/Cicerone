@@ -46,6 +46,7 @@ public class Trip {
     public static final int MODE_FLYING = 0;
     public static final int MODE_WALKING = 1;
     public static final int MODE_RIDING = 2;
+    public boolean tripGoing = true;
 
     public Trip(ArrayList<Mode> modeList, int modeTravel) {
         this.modes = new Mode[modeList.size()];
@@ -60,6 +61,9 @@ public class Trip {
         lPromise =  new LocationsPromise<Location[]>() {
             @Override
             public void locationsFound(com.theciceroneapp.cicerone.model.Location[] locations) {
+                if (!tripGoing) {
+                    return;
+                }
                 Arrays.sort(locations, new Comparator<Location>() {
                     @Override
                     public int compare(Location o1, Location o2) {
@@ -144,7 +148,9 @@ public class Trip {
                         System.out.println("Waiting didnt work!!");
                         e.printStackTrace();
                     }
-                    System.out.println("Nothing found!");
+                    if (!tripGoing) {
+                        return;
+                    }
                     APIHelper.getLocations(radius, modes, lPromise);
                 }
             }
@@ -153,6 +159,9 @@ public class Trip {
         dPromise = new InformationPromise() {
             @Override
             public void foundInformation(Location location, String text) {
+                if (!tripGoing) {
+                    return;
+                }
                 if (!text.equals("")) {
                     locationsWithDecription.add(location);
                     TripService.say(text, tPromise);
@@ -166,6 +175,9 @@ public class Trip {
         tPromise = new TalkPromise() {
             @Override
             public void talkingDone() {
+                if (!tripGoing) {
+                    return;
+                }
                 try {
                     synchronized (this) {
                         if (modeOFTravel == MODE_WALKING) {
@@ -183,6 +195,9 @@ public class Trip {
                     System.out.println("Waiting didnt work!!");
                     e.printStackTrace();
                 }
+                if (!tripGoing) {
+                    return;
+                }
                 APIHelper.getLocations(radius, modes, lPromise);
             }
         };
@@ -190,6 +205,11 @@ public class Trip {
 
     public void startTrip() {
         APIHelper.getLocations(radius, modes, lPromise);
+    }
+
+    public void stopTrip() {
+        tripGoing = false;
+        TripService.stop();
     }
 
 }
