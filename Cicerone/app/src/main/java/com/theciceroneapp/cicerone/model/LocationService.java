@@ -1,8 +1,11 @@
 package com.theciceroneapp.cicerone.model;
 
+import android.Manifest;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -11,6 +14,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 
 /**
  * Created by crsch on 10/13/2017.
@@ -18,8 +22,8 @@ import android.support.annotation.Nullable;
 
 public class LocationService extends Service {
 
-    private LocationListener locationListener;
-    private LocationManager locationManager;
+    private static LocationListener locationListener;
+    private static LocationManager locationManager;
 
     @Nullable
     @Override
@@ -29,7 +33,7 @@ public class LocationService extends Service {
 
     @Override
     public void onCreate() {
-        locationListener = new LocationListener(){
+        locationListener = new LocationListener() {
 
             @Override
             public void onLocationChanged(Location location) {
@@ -62,6 +66,17 @@ public class LocationService extends Service {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3000, 0, locationListener);
         } catch (SecurityException e) {
             e.printStackTrace();
+        }
+
+        String providerName = locationManager.getBestProvider(new Criteria(),
+                true);
+
+        if (providerName != null) {
+            try {
+                APIHelper.setFirstLocation(locationManager.getLastKnownLocation(providerName));
+            } catch (SecurityException e) {
+                e.printStackTrace();
+            }
         }
     }
 

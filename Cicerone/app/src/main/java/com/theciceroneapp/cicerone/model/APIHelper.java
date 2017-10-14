@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.location.Location;
 
 /**
  * Created by crsch on 10/13/2017.
@@ -32,5 +33,11 @@ public class APIHelper {
         }
 
         context.registerReceiver(locationReceiver, new IntentFilter("location_update"));
+    }
+
+    public static void setFirstLocation(Location loc) {
+        latitude = loc.getLatitude();
+        longitude = loc.getLongitude();
+        System.out.printf("Initial Lat: %f, Long: %f%n", latitude, longitude);
     }
 }
