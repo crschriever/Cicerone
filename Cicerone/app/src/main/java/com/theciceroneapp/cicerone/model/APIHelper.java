@@ -1,8 +1,10 @@
 package com.theciceroneapp.cicerone.model;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 
 /**
  * Created by crsch on 10/13/2017.
@@ -13,7 +15,11 @@ public class APIHelper {
     private static long latitude;
     private static long longitude;
 
-    public static BroadcastReceiver listenForLocation() {
+    public static void listenForLocation(Context context) {
+
+        Intent locationService = new Intent(context.getApplicationContext(), LocationService.class);
+        context.startService(locationService);
+
         if (locationReceiver == null) {
             locationReceiver = new BroadcastReceiver() {
                 @Override
@@ -25,6 +31,6 @@ public class APIHelper {
             };
         }
 
-        return locationReceiver;
+        context.registerReceiver(locationReceiver, new IntentFilter("location_update"));
     }
 }
