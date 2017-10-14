@@ -2,4 +2,9 @@
     <string name="app_name">Cicerone</string>
     <string name="cicerone">Cicerone</string>
     <string name="begin_your_journey">Begin your journey</string>
+    <string name="title_activity_mode_selection">Curiosities</string>
+    <string name="large_text">
+        "Yeet."
+    </string>
+    <string name="action_settings">Settings</string>
 </resources>
