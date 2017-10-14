@@ -3,13 +3,10 @@
     <string name="cicerone">Cicerone</string>
     <string name="begin_your_journey">Begin your journey</string>
     <string name="title_activity_mode_selection">Curiosities</string>
-    <string name="large_text">
-        "Yeet."
-    </string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_focus_location">Location</string>
     <string name="section_format">Hello World from section: %1$d</string>
-    <string name="title_activity_this_trip">ThisTripActivity</string>
+    <string name="title_activity_this_trip">Today\'s Journey</string>
     <string name="tour_mode">Tour Mode</string>
     <string name="culture">Culture</string>
     <string name="food">Food</string>
