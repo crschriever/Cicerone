@@ -17,12 +17,17 @@ public class ModeSelectorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mode_selector);
 
-        Button mRegister = (Button) findViewById(R.id.btnTour);
-        mRegister.setOnClickListener(new View.OnClickListener() {
+        Button mTour = (Button) findViewById(R.id.btnTour);
+        mTour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Trip trip = new Trip(Mode.CULTURE);
                 trip.startTrip();
+
+
+                Intent tripPage = new Intent(getApplicationContext(),
+                        ThisTripActivity.class);
+                startActivity(tripPage);
             }
         });
     }

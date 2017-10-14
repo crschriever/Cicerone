@@ -26,8 +26,8 @@ public class StartTripActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_start_trip);
 
-        Button mRegister = (Button) findViewById(R.id.btnBegin);
-        mRegister.setOnClickListener(new View.OnClickListener() {
+        Button mBegin = (Button) findViewById(R.id.btnBegin);
+        mBegin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (getLocationPermissions()) {

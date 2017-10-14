@@ -27,7 +27,10 @@
         <service android:name=".model.TripService" />
 
         <activity android:name=".controller.ModeSelectorActivity" />
-        <activity android:name=".controller.TripOverviewActivity"></activity>
+        <activity
+            android:name=".controller.ThisTripActivity"
+            android:label="@string/title_activity_this_trip"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
