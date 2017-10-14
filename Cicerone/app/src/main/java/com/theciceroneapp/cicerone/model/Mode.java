@@ -5,7 +5,7 @@ package com.theciceroneapp.cicerone.model;
  */
 
 public enum Mode {
-    CULTURE("park|stadium|aquarium|campground|zoo|university"), FOOD("aquarium|campground|zoo|university|stadium|park"),
+    CULTURE("park|art_gallery|stadium|aquarium|campground|zoo|university|casino|cemetery"), FOOD("aquarium|campground|zoo|university|stadium|park"),
     ENTERTAINMENT("aquarium|campground|zoo|university|stadium|park"), BUSINESS("aquarium|campground|zoo|university|stadium|park");
 
     private String placesAPIString;

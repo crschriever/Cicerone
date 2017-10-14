@@ -27,6 +27,8 @@ public class Trip {
     private final int MAX_RADIUS = 5000;
     private final int MIN_RADIUS = 200;
     private final float RADIUS_CHANGE = .25f;
+    private final int AFTER_SPEECH_WAIT = 10000;
+    private final int FAILED_FIND_WAIT = 5000;
 
     public Trip(ArrayList<Mode> modeList) {
         this.modes = modeList;
@@ -81,7 +83,7 @@ public class Trip {
                 if (count == 0) {
                     try {
                         synchronized (this) {
-                            wait(2000);
+                            wait(FAILED_FIND_WAIT);
                         }
                     } catch (InterruptedException e) {
                         // TODO Auto-generated catch block
@@ -99,7 +101,7 @@ public class Trip {
             public void foundInformation(Location location, String text) {
                 if (!text.equals("")) {
                     locationsWithDecription.add(location);
-                    TripService.say(location.getName(), tPromise);
+                    TripService.say(text, tPromise);
                 } else {
                     APIHelper.getLocations(radius, modes.get(0), lPromise);
                 }
@@ -110,6 +112,15 @@ public class Trip {
         tPromise = new TalkPromise() {
             @Override
             public void talkingDone() {
+                try {
+                    synchronized (this) {
+                        wait(AFTER_SPEECH_WAIT);
+                    }
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    System.out.println("Waiting didnt work!!");
+                    e.printStackTrace();
+                }
                 APIHelper.getLocations(radius, modes.get(0), lPromise);
             }
         };
