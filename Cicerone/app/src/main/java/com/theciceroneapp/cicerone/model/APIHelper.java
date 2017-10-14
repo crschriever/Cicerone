@@ -25,6 +25,7 @@ import org.json.JSONObject;
 public class APIHelper {
 
     private static final String PLACE_API_KEY = "AIzaSyBInMdH8pnh1ylbZNnXCnLPndOeWJgk-Uc";
+    private static final String GEOCODE_API_KEY = "AIzaSyANVyKNAsgFOjLRSiSHjsGcfcgEE4U47pY";
 
     private static BroadcastReceiver locationReceiver;
     private static double latitude;
@@ -141,7 +142,7 @@ public class APIHelper {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            //System.out.println(response);
+                            System.out.println(response);
                             JSONArray res = response.getJSONArray("results");
                             com.theciceroneapp.cicerone.model.Location[] locations = new com.theciceroneapp.cicerone.model.Location[res.length()];
                             System.out.println("Response Length: " + res.length());
