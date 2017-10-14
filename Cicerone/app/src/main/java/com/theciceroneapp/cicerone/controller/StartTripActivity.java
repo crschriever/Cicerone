@@ -41,7 +41,7 @@ public class StartTripActivity extends AppCompatActivity {
     }
 
     private void enableLocationServices() {
-        APIHelper.listenForLocation(this);
+        APIHelper.init(this);
     }
 
     private boolean getLocationPermissions() {
