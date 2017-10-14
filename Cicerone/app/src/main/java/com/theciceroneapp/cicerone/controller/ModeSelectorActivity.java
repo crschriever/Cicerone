@@ -13,6 +13,7 @@ import com.theciceroneapp.cicerone.R;
 import com.theciceroneapp.cicerone.model.Mode;
 import com.theciceroneapp.cicerone.model.Trip;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class ModeSelectorActivity extends AppCompatActivity {
@@ -24,10 +25,10 @@ public class ModeSelectorActivity extends AppCompatActivity {
 
         // Declare View objects
         Switch mTourStatus = (Switch) findViewById(R.id.swtTourMode);
-        CheckBox mCultureStatus = (CheckBox) findViewById(R.id.chkCulture);
-        CheckBox mFoodStatus = (CheckBox) findViewById(R.id.chkFood);
-        CheckBox mEntStatus = (CheckBox) findViewById(R.id.chkEntertainment);
-        CheckBox mBusinessStatus = (CheckBox) findViewById(R.id.chkBusiness);
+        final CheckBox mCultureStatus = (CheckBox) findViewById(R.id.chkCulture);
+        final CheckBox mFoodStatus = (CheckBox) findViewById(R.id.chkFood);
+        final CheckBox mEntStatus = (CheckBox) findViewById(R.id.chkEntertainment);
+        final CheckBox mBusinessStatus = (CheckBox) findViewById(R.id.chkBusiness);
         final CheckBox[] chkGroup = {mBusinessStatus, mCultureStatus, mEntStatus, mFoodStatus};
 
         // When tour mode is flipped, switch checkboxes being enabled
@@ -36,7 +37,11 @@ public class ModeSelectorActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     for (CheckBox chk : chkGroup) {
-                        chk.setChecked(false);
+                        if (chk == mCultureStatus || chk == mEntStatus) {
+                            chk.setChecked(true);
+                        } else {
+                            chk.setChecked(false);
+                        }
                         chk.setEnabled(false);
                     }
                 } else {
@@ -54,8 +59,22 @@ public class ModeSelectorActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Pull the modes selected from checkboxes and pass them into Trip()
+                ArrayList<Mode> modes = new ArrayList<Mode>(4);
+                if (mCultureStatus.isChecked()) {
+                    modes.add(Mode.CULTURE);
+                }
+                if (mFoodStatus.isChecked()) {
+                    modes.add(Mode.FOOD);
+                }
+                if (mEntStatus.isChecked()) {
+                    modes.add(Mode.ENTERTAINMENT);
+                }
+                if (mBusinessStatus.isChecked()) {
+                    modes.add(Mode.BUSINESS);
+                }
 
-                Trip trip = new Trip(Mode.CULTURE);
+                
+                Trip trip = new Trip(modes);
                 trip.startTrip();
 
 
