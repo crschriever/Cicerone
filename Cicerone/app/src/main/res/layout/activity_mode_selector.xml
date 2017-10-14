@@ -1,9 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.theciceroneapp.cicerone.controller.ModeSelectorActivity">
+    tools:context="com.theciceroneapp.cicerone.controller.ModeSelectorActivity"
+    android:orientation="vertical"
+    android:weightSum="1">
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:id="@+id/tvPrompt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:layout_marginTop="32dp"
+        android:fontFamily="serif"
+        android:text="What are we curious about?"
+        android:textAlignment="center"
+        android:textAppearance="@android:style/TextAppearance.Holo.Light.Medium"
+        android:textSize="24sp"
+        android:textStyle="italic" />
+
+    <Switch
+        android:id="@+id/swtTourMode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:text="Tour Mode" />
+
+    <CheckBox
+        android:id="@+id/chkCulture"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="10dp"
+        android:text="Culture" />
+
+    <CheckBox
+        android:id="@+id/chkFood"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="10dp"
+        android:text="Food" />
+
+    <CheckBox
+        android:id="@+id/chkEntertainment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="10dp"
+        android:text="Entertainment" />
+
+    <CheckBox
+        android:id="@+id/chkBusiness"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="10dp"
+        android:text="Business" />
+
+    <Button
+        android:id="@+id/btnTour"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_weight="0.21"
+        android:fontFamily="sans-serif"
+        android:text="Tour"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textAppearance="@android:style/TextAppearance.Holo.Widget.Button"
+        android:textSize="24sp" />
+</LinearLayout>
