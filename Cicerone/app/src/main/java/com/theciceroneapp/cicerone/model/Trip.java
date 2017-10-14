@@ -17,12 +17,13 @@ import java.util.List;
 public class Trip {
 
     private HashSet<Location> locations = new HashSet<>();
+    private List<Location> locationsWithDecription = new ArrayList<>();
     private List<Mode> modes = new ArrayList<>();
     private final LocationsPromise<Location[]> lPromise;
     private final TalkPromise tPromise;
-    private final LocationsPromise<String> dPromise;
+    private final InformationPromise dPromise;
 
-    private double radius = 5000;
+    private double radius = 500;
     private final int MAX_RADIUS = 5000;
     private final int MIN_RADIUS = 200;
     private final float RADIUS_CHANGE = .25f;
@@ -65,7 +66,10 @@ public class Trip {
                     radius *= (1.0 - RADIUS_CHANGE);
                 } else if (count < 3) {
                     radius *= (1.0 + RADIUS_CHANGE);
+                    System.out.println(1.0 + RADIUS_CHANGE);
                 }
+
+                System.out.println(radius + ", " + count);
 
                 if (radius < MIN_RADIUS) {
                     radius = MIN_RADIUS;
@@ -73,17 +77,33 @@ public class Trip {
                     radius = MAX_RADIUS;
                 }
                 System.out.println(radius + ", " + count);
+
+                if (count == 0) {
+                    try {
+                        synchronized (this) {
+                            wait(2000);
+                        }
+                    } catch (InterruptedException e) {
+                        // TODO Auto-generated catch block
+                        System.out.println("Waiting didnt work!!");
+                        e.printStackTrace();
+                    }
+                    System.out.println("Nothing found!");
+                    APIHelper.getLocations(radius, Mode.CULTURE, lPromise);
+                }
             }
         };
 
-        dPromise = new LocationsPromise<String>() {
+        dPromise = new InformationPromise() {
             @Override
-            public void locationsFound(String info) {
-                if (info.equals("")) {
-
+            public void foundInformation(Location location, String text) {
+                if (!text.equals("")) {
+                    locationsWithDecription.add(location);
+                    TripService.say(location.getName(), tPromise);
                 } else {
-                    TripService.say(info, tPromise);
+                    APIHelper.getLocations(radius, modes.get(0), lPromise);
                 }
+                System.out.println(locations);
             }
         };
 

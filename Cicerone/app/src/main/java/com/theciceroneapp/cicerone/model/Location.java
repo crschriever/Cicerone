@@ -12,6 +12,7 @@ public class Location {
     private final String name;
     private final String address;
     private final HashSet<String> types = new HashSet<>();
+    private String description;
 
     public Location(double longitude, double latitude, String name, String address, String[] types) {
         this.longitude = longitude;
@@ -69,5 +70,13 @@ public class Location {
 
     public HashSet<String> getTypes() {
         return types;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }
