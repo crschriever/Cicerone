@@ -3,7 +3,7 @@ package com.theciceroneapp.cicerone;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class StartTrip extends AppCompatActivity {
+public class StartTripActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
