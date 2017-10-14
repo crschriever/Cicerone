@@ -21,7 +21,6 @@ public enum Mode {
     }
 
     public int compareLocation(Location l1, Location l2) {
-        System.out.println(types.length);
         for (String s: types) {
             if (l1.getTypes().contains(s) && !l2.getTypes().contains(s)) {
                 return -1;

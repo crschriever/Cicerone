@@ -5,6 +5,7 @@ import android.widget.ListAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -17,17 +18,17 @@ public class Trip {
 
     private HashSet<Location> locations = new HashSet<>();
     private List<Mode> modes = new ArrayList<>();
-    final LocationsPromise<Location[]> lPromise;
-    final TalkPromise tPromise;
-    final LocationsPromise<String> dPromise;
+    private final LocationsPromise<Location[]> lPromise;
+    private final TalkPromise tPromise;
+    private final LocationsPromise<String> dPromise;
 
-    private int radius = 5000;
+    private double radius = 5000;
+    private final int MAX_RADIUS = 5000;
+    private final int MIN_RADIUS = 200;
+    private final float RADIUS_CHANGE = .25f;
 
-    public Trip(Mode mode, Mode...otherModes) {
-        modes.add(mode);
-        for (Mode m: otherModes) {
-            modes.add(m);
-        }
+    public Trip(ArrayList<Mode> modeList) {
+        this.modes = modeList;
 
         final Trip thisTrip = this;
 
@@ -47,21 +48,42 @@ public class Trip {
                         return 0;
                     };
                 });
+                int count = 0;
                 for(com.theciceroneapp.cicerone.model.Location l: locations) {
                     if (!thisTrip.locations.contains(l)) {
-                        thisTrip.locations.add(l);
-                        System.out.println(l.getName());
-                        APIHelper.getWikiInformation(l.getName(), dPromise);
-                        break;
+                        if (count == 0) {
+                            APIHelper.getWikiInformation(l, dPromise);
+                            thisTrip.locations.add(l);
+                            System.out.println(l.getName());
+                        }
+                        count++;
                     }
                 }
+
+                // Changing radius based on the amount or responses
+                if (count > 10) {
+                    radius *= (1.0 - RADIUS_CHANGE);
+                } else if (count < 3) {
+                    radius *= (1.0 + RADIUS_CHANGE);
+                }
+
+                if (radius < MIN_RADIUS) {
+                    radius = MIN_RADIUS;
+                } else if (radius > MAX_RADIUS) {
+                    radius = MAX_RADIUS;
+                }
+                System.out.println(radius + ", " + count);
             }
         };
 
         dPromise = new LocationsPromise<String>() {
             @Override
             public void locationsFound(String info) {
-                TripService.say(info, tPromise);
+                if (info.equals("")) {
+
+                } else {
+                    TripService.say(info, tPromise);
+                }
             }
         };
 

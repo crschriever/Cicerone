@@ -59,10 +59,11 @@ public class APIHelper {
         System.out.printf("Initial Lat: %f, Long: %f%n", latitude, longitude);
     }
 
-    public static void getWikiInformation(String locName, final LocationsPromise<String> promise) {
+    public static void getWikiInformation(final com.theciceroneapp.cicerone.model.Location location, final LocationsPromise<String> promise) {
+        String locName = location.getName();
         String url ="https://en.wikipedia.org/w/api.php?action=parse&page=" + locName + "&format=json";
         //final LocationsPromise promise = prom;
-        //System.out.println(url);
+        System.out.println(url);
 
         final String locationName = locName;
 
@@ -81,11 +82,26 @@ public class APIHelper {
                             text = text.replaceAll("\\[.*\\]", "");
                             text = text.replaceAll("\\(.*\\)", "");
                             System.out.println(text);
-                            promise.locationsFound("You're nearby " + locationName + ". " + text);
+
+                            String regex = "<span class=\"geo\">";
+                            int locationIndex = res.indexOf(regex) + regex.length();
+                            int endLocation = res.indexOf(";", locationIndex);
+                            double lat = Double.parseDouble(res.substring(locationIndex, endLocation));
+                            locationIndex = endLocation + 1;
+                            endLocation = res.indexOf("<", locationIndex);
+                            double lon = Double.parseDouble(res.substring(locationIndex, endLocation));
+
+                            if (Math.abs(location.getLatitude() - lat) < 5 && Math.abs(location.getLongitude() - lon) < 5) {
+                                promise.locationsFound("You're nearby " + locationName + ". " + text);
+                            } else {
+                                promise.locationsFound("");
+                            }
+
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            promise.locationsFound("You're nearby " + locationName + "."
-                            );
+                            promise.locationsFound("");
+                        } catch (StringIndexOutOfBoundsException e) {
+                            e.printStackTrace();
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -102,7 +118,7 @@ public class APIHelper {
     public static void getLocations(double radius, Mode mode, LocationsPromise prom) {
 
         String url ="https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="
-                + (float)latitude + "," + (float)longitude + "&radius=" + radius + "&type=" + mode.getAPISTRING()
+                + (float)latitude + "," + (float)longitude + "&radius=" + (float)radius + "&type=" + mode.getAPISTRING()
                 + "&rankby=prominence&key=" + PLACE_API_KEY;
         final LocationsPromise promise = prom;
         System.out.println(url);
