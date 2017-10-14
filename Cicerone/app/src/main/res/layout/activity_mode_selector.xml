@@ -17,8 +17,7 @@
         android:fontFamily="serif"
         android:text="What are we curious about?"
         android:textAlignment="center"
-        android:textAppearance="@android:style/TextAppearance.Holo.Light.Medium"
-        android:textSize="24sp"
+        android:textSize="30sp"
         android:textStyle="italic" />
 
     <Switch
@@ -28,7 +27,8 @@
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:text="Tour Mode" />
+        android:text="Tour Mode"
+        android:textSize="18sp" />
 
     <CheckBox
         android:id="@+id/chkCulture"
