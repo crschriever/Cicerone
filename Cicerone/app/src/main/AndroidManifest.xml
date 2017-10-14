@@ -24,6 +24,7 @@
         </activity>
 
         <service android:name=".model.LocationService" />
+        <service android:name=".model.TripService" />
 
         <activity android:name=".controller.ModeSelectorActivity" />
         <activity android:name=".controller.TripOverviewActivity"></activity>

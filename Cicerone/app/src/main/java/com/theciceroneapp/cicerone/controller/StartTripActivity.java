@@ -13,12 +13,17 @@ import android.widget.Button;
 
 import com.theciceroneapp.cicerone.R;
 import com.theciceroneapp.cicerone.model.APIHelper;
+import com.theciceroneapp.cicerone.model.LocationService;
+import com.theciceroneapp.cicerone.model.TripService;
 
 public class StartTripActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        System.out.println("Creating Start Trip Activity");
+
         setContentView(R.layout.activity_start_trip);
 
         Button mRegister = (Button) findViewById(R.id.btnBegin);
@@ -38,6 +43,10 @@ public class StartTripActivity extends AppCompatActivity {
             // We have permission to run location services
             enableLocationServices();
         }
+
+        //Speech service
+        Intent speechService = new Intent(getApplicationContext(), TripService.class);
+        startService(speechService);
     }
 
     private void enableLocationServices() {
