@@ -12,8 +12,8 @@ import android.content.IntentFilter;
 
 public class APIHelper {
     private static BroadcastReceiver locationReceiver;
-    private static long latitude;
-    private static long longitude;
+    private static double latitude;
+    private static double longitude;
 
     public static void listenForLocation(Context context) {
 
@@ -24,9 +24,9 @@ public class APIHelper {
             locationReceiver = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
-                    latitude = (long) intent.getExtras().get("latitude");
-                    longitude = (long) intent.getExtras().get("longitude");
-                    System.out.printf("Lat: %d, Long: %d%n", latitude, longitude);
+                    latitude = (double) intent.getExtras().get("latitude");
+                    longitude = (double) intent.getExtras().get("longitude");
+                    System.out.printf("Lat: %f, Long: %f%n", latitude, longitude);
                 }
             };
         }

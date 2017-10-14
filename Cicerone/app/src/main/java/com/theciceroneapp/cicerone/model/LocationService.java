@@ -29,7 +29,6 @@ public class LocationService extends Service {
 
     @Override
     public void onCreate() {
-        System.out.println("Hello World 1");
         locationListener = new LocationListener(){
 
             @Override
