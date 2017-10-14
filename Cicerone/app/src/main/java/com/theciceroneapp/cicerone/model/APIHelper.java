@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.location.Location;
+import android.provider.Settings;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -56,6 +57,46 @@ public class APIHelper {
         latitude = loc.getLatitude();
         longitude = loc.getLongitude();
         System.out.printf("Initial Lat: %f, Long: %f%n", latitude, longitude);
+    }
+
+    public static void getWikiInformation(String locName, final LocationsPromise<String> promise) {
+        String url ="https://en.wikipedia.org/w/api.php?action=parse&page=" + locName + "&format=json";
+        //final LocationsPromise promise = prom;
+        //System.out.println(url);
+
+        final String locationName = locName;
+
+        // Request a string response from the provided URL.
+        JsonObjectRequest request = new JsonObjectRequest (Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            System.out.println(response);
+                            String res = response.getJSONObject("parse").getJSONObject("text").getString("*");
+                            int start = res.indexOf("<p>");
+                            int end = res.indexOf("</p>", start);
+                            String text = res.substring(start, end);
+                            text = text.replaceAll("(?s)<[^>]*>(\\s*<[^>]*>)*", "");
+                            text = text.replaceAll("\\[.*\\]", "");
+                            text = text.replaceAll("\\(.*\\)", "");
+                            System.out.println(text);
+                            promise.locationsFound("You're nearby " + locationName + ". " + text);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            promise.locationsFound("You're nearby " + locationName + "."
+                            );
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println("Error! Request PLACE API failed");
+            }
+        });
+
+        // Add the request to the RequestQueue.
+        queue.add(request);
     }
 
     public static void getLocations(double radius, Mode mode, LocationsPromise prom) {

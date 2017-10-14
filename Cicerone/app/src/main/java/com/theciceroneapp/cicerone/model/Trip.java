@@ -17,8 +17,9 @@ public class Trip {
 
     private HashSet<Location> locations = new HashSet<>();
     private List<Mode> modes = new ArrayList<>();
-    final LocationsPromise lPromise;
+    final LocationsPromise<Location[]> lPromise;
     final TalkPromise tPromise;
+    final LocationsPromise<String> dPromise;
 
     private int radius = 5000;
 
@@ -30,7 +31,7 @@ public class Trip {
 
         final Trip thisTrip = this;
 
-        lPromise =  new LocationsPromise() {
+        lPromise =  new LocationsPromise<Location[]>() {
             @Override
             public void locationsFound(com.theciceroneapp.cicerone.model.Location[] locations) {
                 Arrays.sort(locations, new Comparator<Location>() {
@@ -49,11 +50,18 @@ public class Trip {
                 for(com.theciceroneapp.cicerone.model.Location l: locations) {
                     if (!thisTrip.locations.contains(l)) {
                         thisTrip.locations.add(l);
-                        TripService.say(l.getName(), tPromise);
                         System.out.println(l.getName());
+                        APIHelper.getWikiInformation(l.getName(), dPromise);
                         break;
                     }
                 }
+            }
+        };
+
+        dPromise = new LocationsPromise<String>() {
+            @Override
+            public void locationsFound(String info) {
+                TripService.say(info, tPromise);
             }
         };
 
