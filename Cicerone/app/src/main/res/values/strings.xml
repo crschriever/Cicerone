@@ -10,4 +10,12 @@
     <string name="title_activity_focus_location">Location</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_this_trip">ThisTripActivity</string>
+    <string name="tour_mode">Tour Mode</string>
+    <string name="culture">Culture</string>
+    <string name="food">Food</string>
+    <string name="entertainment">Entertainment</string>
+    <string name="business">Business</string>
+    <string name="pedestrianMsg">I\'m a pedestrian.</string>
+    <string name="in_car">I\'m in a car.</string>
+    <string name="tour_button">Tour!</string>
 </resources>

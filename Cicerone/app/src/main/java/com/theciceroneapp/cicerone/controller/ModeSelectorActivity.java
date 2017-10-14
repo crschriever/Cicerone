@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.Switch;
 
 import com.theciceroneapp.cicerone.R;
@@ -31,6 +32,7 @@ public class ModeSelectorActivity extends AppCompatActivity {
         final CheckBox mEntStatus = (CheckBox) findViewById(R.id.chkEntertainment);
         final CheckBox mBusinessStatus = (CheckBox) findViewById(R.id.chkBusiness);
         final CheckBox[] chkGroup = {mBusinessStatus, mCultureStatus, mEntStatus, mFoodStatus};
+        final RadioButton mInVehicle = (RadioButton) findViewById(R.id.radVehicle);
 
         // When tour mode is flipped, switch checkboxes being enabled
         mTourStatus.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -77,7 +79,12 @@ public class ModeSelectorActivity extends AppCompatActivity {
                 if (modes.isEmpty()) {
                     // TODO: disable the button if nothing is selected
                 } else {
-                    Trip trip = new Trip(modes, Trip.MODE_WALKING);
+                    Trip trip;
+                    if (mInVehicle.isChecked()) {
+                        trip = new Trip(modes, Trip.MODE_RIDING);
+                    } else {
+                        trip = new Trip(modes, Trip.MODE_WALKING);
+                    }
                     trip.startTrip();
 
 
