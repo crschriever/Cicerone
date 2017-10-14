@@ -96,7 +96,9 @@ public class APIHelper {
 
                             if (Math.abs(location.getLatitude() - lat) < 5 && Math.abs(location.getLongitude() - lon) < 5) {
                                 location.setDescription(text);
-                                promise.foundInformation(location, "You're nearby " + locationName + ". " + text);
+                                promise.foundInformation(location, String.format("%s is %.1f miles to the %s. %s",
+                                        locationName, DistanceCalculator.distance(latitude, longitude, lat, lon, "M"),
+                                        BearingCalculator.calculateBearing(latitude, longitude, lat, lon), text));
                             } else {
                                 promise.foundInformation(location, "");
                             }
