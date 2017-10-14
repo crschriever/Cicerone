@@ -76,4 +76,5 @@
         android:textAllCaps="false"
         android:textAppearance="@android:style/TextAppearance.Holo.Widget.Button"
         android:textSize="24sp" />
+
 </LinearLayout>

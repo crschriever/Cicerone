@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 
 import com.theciceroneapp.cicerone.R;
@@ -54,12 +55,12 @@ public class ModeSelectorActivity extends AppCompatActivity {
 
 
 
-        Button mTour = (Button) findViewById(R.id.btnTour);
+        final Button mTour = (Button) findViewById(R.id.btnTour);
         mTour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Pull the modes selected from checkboxes and pass them into Trip()
-                ArrayList<Mode> modes = new ArrayList<Mode>(4);
+                ArrayList<Mode> modes = new ArrayList<>(4);
                 if (mCultureStatus.isChecked()) {
                     modes.add(Mode.CULTURE);
                 }
@@ -73,14 +74,17 @@ public class ModeSelectorActivity extends AppCompatActivity {
                     modes.add(Mode.BUSINESS);
                 }
 
-                
-                Trip trip = new Trip(modes);
-                trip.startTrip();
+                if (modes.isEmpty()) {
+                    // TODO: disable the button if nothing is selected
+                } else {
+                    Trip trip = new Trip(modes);
+                    trip.startTrip();
 
 
-                Intent tripPage = new Intent(getApplicationContext(),
-                        ThisTripActivity.class);
-                startActivity(tripPage);
+                    Intent tripPage = new Intent(getApplicationContext(),
+                            ThisTripActivity.class);
+                    startActivity(tripPage);
+                }
             }
         });
     }
