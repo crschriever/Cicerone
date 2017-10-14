@@ -125,10 +125,10 @@ public class APIHelper {
         queue.add(request);
     }
 
-    public static void getLocations(double radius, Mode mode, LocationsPromise prom) {
+    public static void getLocations(double radius, Mode[] modes, LocationsPromise prom) {
 
         String url ="https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="
-                + (float)latitude + "," + (float)longitude + "&radius=" + (float)radius + "&type=" + mode.getAPISTRING()
+                + (float)latitude + "," + (float)longitude + "&radius=" + (float)radius + "&type=" + Mode.getCombinedAPIString(modes)
                 + "&rankby=prominence&key=" + PLACE_API_KEY;
         final LocationsPromise promise = prom;
         System.out.println(url);
@@ -139,7 +139,7 @@ public class APIHelper {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            System.out.println(response);
+                            //System.out.println(response);
                             JSONArray res = response.getJSONArray("results");
                             com.theciceroneapp.cicerone.model.Location[] locations = new com.theciceroneapp.cicerone.model.Location[res.length()];
                             System.out.println("Response Length: " + res.length());

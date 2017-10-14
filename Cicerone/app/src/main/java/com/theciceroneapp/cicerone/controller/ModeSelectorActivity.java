@@ -77,7 +77,7 @@ public class ModeSelectorActivity extends AppCompatActivity {
                 if (modes.isEmpty()) {
                     // TODO: disable the button if nothing is selected
                 } else {
-                    Trip trip = new Trip(modes);
+                    Trip trip = new Trip(modes, Trip.MODE_WALKING);
                     trip.startTrip();
 
 
