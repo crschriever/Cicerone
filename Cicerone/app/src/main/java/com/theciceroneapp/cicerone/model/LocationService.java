@@ -29,6 +29,7 @@ public class LocationService extends Service {
 
     @Override
     public void onCreate() {
+        System.out.println("Hello World 1");
         locationListener = new LocationListener(){
 
             @Override
@@ -36,6 +37,7 @@ public class LocationService extends Service {
                 Intent locationUpdate = new Intent("location_update");
                 locationUpdate.putExtra("longitude", location.getLongitude());
                 locationUpdate.putExtra("latitude", location.getLatitude());
+                sendBroadcast(locationUpdate);
             }
 
             @Override
