@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Cicerone</string>
+    <string name="cicerone">Cicerone</string>
+    <string name="begin_your_journey">Begin your journey</string>
 </resources>

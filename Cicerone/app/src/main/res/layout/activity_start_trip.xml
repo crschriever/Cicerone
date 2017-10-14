@@ -8,6 +8,7 @@
     android:background="@drawable/horizon"
     >
 
+
     <TextView
         android:id="@+id/tvCicerone"
         android:layout_width="wrap_content"
@@ -16,7 +17,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="179dp"
         android:fontFamily="serif"
-        android:text="Cicerone"
+        android:text="@string/cicerone"
         android:textAlignment="center"
         android:textAppearance="@android:style/TextAppearance.Material.Display3"
         android:textColor="@color/colorPrimaryDark"
@@ -35,7 +36,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="5dp"
-        android:text="Begin your journey"
+        android:text="@string/begin_your_journey"
         android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
         android:textColor="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
