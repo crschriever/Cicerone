@@ -25,7 +25,8 @@
 
         <service android:name=".model.LocationService" />
 
-        <activity android:name=".controller.ModeSelectorActivity"></activity>
+        <activity android:name=".controller.ModeSelectorActivity" />
+        <activity android:name=".controller.TripOverviewActivity"></activity>
     </application>
 
 </manifest>
