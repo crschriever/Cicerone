@@ -20,7 +20,7 @@ public class Trip {
     final LocationsPromise lPromise;
     final TalkPromise tPromise;
 
-    private int radius = 500;
+    private int radius = 5000;
 
     public Trip(Mode mode, Mode...otherModes) {
         modes.add(mode);
@@ -33,17 +33,24 @@ public class Trip {
         lPromise =  new LocationsPromise() {
             @Override
             public void locationsFound(com.theciceroneapp.cicerone.model.Location[] locations) {
-                /*Arrays.sort(locations, new Comparator<Location>() {
+                Arrays.sort(locations, new Comparator<Location>() {
                     @Override
                     public int compare(Location o1, Location o2) {
+                        for (Mode m: modes) {
+                            int comp = m.compareLocation(o1, o2);
+                            if (comp != 0) {
+                                return comp;
+                            }
+                        }
 
                         return 0;
                     };
-                });*/
+                });
                 for(com.theciceroneapp.cicerone.model.Location l: locations) {
                     if (!thisTrip.locations.contains(l)) {
                         thisTrip.locations.add(l);
                         TripService.say(l.getName(), tPromise);
+                        System.out.println(l.getName());
                         break;
                     }
                 }
@@ -53,13 +60,13 @@ public class Trip {
         tPromise = new TalkPromise() {
             @Override
             public void talkingDone() {
-                APIHelper.getLocations(500, Mode.CULTURE, lPromise);
+                APIHelper.getLocations(radius, modes.get(0), lPromise);
             }
         };
     }
 
     public void startTrip() {
-        APIHelper.getLocations(500, Mode.CULTURE, lPromise);
+        APIHelper.getLocations(radius, Mode.CULTURE, lPromise);
     }
 
 }

@@ -64,7 +64,7 @@ public class APIHelper {
                 + (float)latitude + "," + (float)longitude + "&radius=" + radius + "&type=" + mode.getAPISTRING()
                 + "&rankby=prominence&key=" + PLACE_API_KEY;
         final LocationsPromise promise = prom;
-//        System.out.println(url);
+        System.out.println(url);
 
         // Request a string response from the provided URL.
         JsonObjectRequest request = new JsonObjectRequest (Request.Method.GET, url, null,
