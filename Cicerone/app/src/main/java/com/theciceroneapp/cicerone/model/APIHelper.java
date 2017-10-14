@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.location.Location;
 
 /**
  * Created by crsch on 10/13/2017.
@@ -12,8 +13,8 @@ import android.content.IntentFilter;
 
 public class APIHelper {
     private static BroadcastReceiver locationReceiver;
-    private static long latitude;
-    private static long longitude;
+    private static double latitude;
+    private static double longitude;
 
     public static void listenForLocation(Context context) {
 
@@ -24,13 +25,19 @@ public class APIHelper {
             locationReceiver = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
-                    latitude = (long) intent.getExtras().get("latitude");
-                    longitude = (long) intent.getExtras().get("longitude");
-                    System.out.printf("Lat: %d, Long: %d%n", latitude, longitude);
+                    latitude = (double) intent.getExtras().get("latitude");
+                    longitude = (double) intent.getExtras().get("longitude");
+                    System.out.printf("Lat: %f, Long: %f%n", latitude, longitude);
                 }
             };
         }
 
         context.registerReceiver(locationReceiver, new IntentFilter("location_update"));
+    }
+
+    public static void setFirstLocation(Location loc) {
+        latitude = loc.getLatitude();
+        longitude = loc.getLongitude();
+        System.out.printf("Initial Lat: %f, Long: %f%n", latitude, longitude);
     }
 }

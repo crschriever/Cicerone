@@ -36,7 +36,7 @@ public class StartTripActivity extends AppCompatActivity {
 
         if (getLocationPermissions()) {
             // We have permission to run location services
-            //enableLocationServices();
+            enableLocationServices();
         }
     }
 
