@@ -1,7 +1,9 @@
-package com.theciceroneapp.cicerone;
+package com.theciceroneapp.cicerone.controller;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.theciceroneapp.cicerone.R;
 
 public class StartTripActivity extends AppCompatActivity {
 
