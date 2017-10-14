@@ -33,6 +33,7 @@ public class ModeSelectorActivity extends AppCompatActivity {
         final CheckBox mBusinessStatus = (CheckBox) findViewById(R.id.chkBusiness);
         final CheckBox[] chkGroup = {mBusinessStatus, mCultureStatus, mEntStatus, mFoodStatus};
         final RadioButton mInVehicle = (RadioButton) findViewById(R.id.radVehicle);
+        final RadioButton mInPlane = (RadioButton) findViewById(R.id.radFlying);
 
         // When tour mode is flipped, switch checkboxes being enabled
         mTourStatus.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -82,6 +83,8 @@ public class ModeSelectorActivity extends AppCompatActivity {
                     Trip trip;
                     if (mInVehicle.isChecked()) {
                         trip = new Trip(modes, Trip.MODE_RIDING);
+                    } else if (mInPlane.isChecked()) {
+                        trip = new Trip(modes, Trip.MODE_FLYING);
                     } else {
                         trip = new Trip(modes, Trip.MODE_WALKING);
                     }
