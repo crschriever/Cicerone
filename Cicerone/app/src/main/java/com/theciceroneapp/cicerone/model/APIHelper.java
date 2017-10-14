@@ -54,6 +54,7 @@ public class APIHelper {
                     longitude = (double) intent.getExtras().get("longitude");
                     System.out.printf("Lat: %f, Long: %f%n", latitude, longitude);
                     getLocations(3000, null, promise);
+                    TripService.say("Test");
                 }
             };
         }
