@@ -85,6 +85,13 @@
                 android:text="@string/in_car" />
 
             <RadioButton
+                android:id="@+id/radFlying"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="I'm Flying" />
+
+            <RadioButton
                 android:id="@+id/radPedestrian"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
