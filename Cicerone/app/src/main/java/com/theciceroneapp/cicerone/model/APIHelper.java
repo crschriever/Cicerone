@@ -59,11 +59,14 @@ public class APIHelper {
         System.out.printf("Initial Lat: %f, Long: %f%n", latitude, longitude);
     }
 
-    public static void getWikiInformation(final com.theciceroneapp.cicerone.model.Location location, final LocationsPromise<String> promise) {
+    /**
+     * Location's description is populated here
+     */
+    public static void getWikiInformation(final com.theciceroneapp.cicerone.model.Location location, final InformationPromise promise) {
         String locName = location.getName();
-        String url ="https://en.wikipedia.org/w/api.php?action=parse&page=" + locName + "&format=json";
+        String url ="https://en.wikipedia.org/w/api.php?action=parse&page=" + locName + "&format=json&redirects";
         //final LocationsPromise promise = prom;
-        System.out.println(url);
+        //System.out.println(url);
 
         final String locationName = locName;
 
@@ -92,22 +95,29 @@ public class APIHelper {
                             double lon = Double.parseDouble(res.substring(locationIndex, endLocation));
 
                             if (Math.abs(location.getLatitude() - lat) < 5 && Math.abs(location.getLongitude() - lon) < 5) {
-                                promise.locationsFound("You're nearby " + locationName + ". " + text);
+                                location.setDescription(text);
+                                promise.foundInformation(location, "You're nearby " + locationName + ". " + text);
                             } else {
-                                promise.locationsFound("");
+                                promise.foundInformation(location, "");
                             }
 
                         } catch (JSONException e) {
-                            e.printStackTrace();
-                            promise.locationsFound("");
+                            System.out.println("JSON element not found");
+                            promise.foundInformation(location, "");
                         } catch (StringIndexOutOfBoundsException e) {
                             e.printStackTrace();
+                            promise.foundInformation(location, "");
+                        } catch (NumberFormatException e) {
+                            System.out.println("Lat or Long mis formatted");
+                            promise.foundInformation(location, "");
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
                 System.out.println("Error! Request PLACE API failed");
+                promise.foundInformation(location, "");
             }
         });
 
@@ -133,7 +143,7 @@ public class APIHelper {
                             JSONArray res = response.getJSONArray("results");
                             com.theciceroneapp.cicerone.model.Location[] locations = new com.theciceroneapp.cicerone.model.Location[res.length()];
                             System.out.println("Response Length: " + res.length());
-                            System.out.println(res.getJSONObject(0));
+                            //System.out.println(res.getJSONObject(0));
                             for (int i = 0; i < res.length(); i++) {
                                 JSONObject object = res.getJSONObject(i);
                                 double longi = -3000;
@@ -168,12 +178,15 @@ public class APIHelper {
                             promise.locationsFound(locations);
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            promise.locationsFound(new Location[]{});
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
                 System.out.println("Error! Request PLACE API failed");
+                promise.locationsFound(new Location[]{});
             }
         });
 
