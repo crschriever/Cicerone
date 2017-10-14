@@ -4,6 +4,8 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.speech.tts.TextToSpeech;
+import android.speech.tts.UtteranceProgressListener;
+import android.speech.tts.Voice;
 import android.support.annotation.Nullable;
 
 import java.util.Locale;
@@ -17,6 +19,7 @@ public class TripService extends Service {
     public static TripService singleton;
     private TextToSpeech toSpeech;
     private int result;
+    private MyUtteranceProgressListener progressListener;
 
     @Nullable
     @Override
@@ -39,10 +42,37 @@ public class TripService extends Service {
                 }
             }
         });
+
+        progressListener = new MyUtteranceProgressListener();
+
+        toSpeech.setOnUtteranceProgressListener(progressListener);
+
     }
 
-    public static void say(String text) {
+    public static void say(String text, TalkPromise promise) {
+        singleton.progressListener.promise = promise;
         String utteranceId = singleton.hashCode() + "";
         singleton.toSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, utteranceId);
+
+    }
+
+    private class MyUtteranceProgressListener extends UtteranceProgressListener {
+        private TalkPromise promise;
+
+        @Override
+        public void onStart(String utteranceId) {
+            System.out.println("Talking");
+        }
+
+        @Override
+        public void onDone(String utteranceId) {
+            System.out.println("Done Talking");
+            promise.talkingDone();
+        }
+
+        @Override
+        public void onError(String utteranceId) {
+
+        }
     }
 }

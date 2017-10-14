@@ -9,12 +9,14 @@ public class Location {
     private final double latitude;
     private final String name;
     private final String address;
+    private final String[] types;
 
-    public Location(double longitude, double latitude, String name, String address) {
+    public Location(double longitude, double latitude, String name, String address, String[] types) {
         this.longitude = longitude;
         this.latitude = latitude;
         this.name = name;
         this.address = address;
+        this.types = types;
     }
 
     @Override
@@ -22,6 +24,19 @@ public class Location {
         return "Location{" +
                 "name='" + name + '\'' +
                 '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        temp = Double.doubleToLongBits(longitude);
+        result = (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(latitude);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (address != null ? address.hashCode() : 0);
+        return result;
     }
 
     @Override
@@ -52,5 +67,9 @@ public class Location {
 
     public String getAddress() {
         return address;
+    }
+
+    public String[] getTypes() {
+        return types;
     }
 }

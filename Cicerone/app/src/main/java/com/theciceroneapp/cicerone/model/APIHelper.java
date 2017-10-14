@@ -1,6 +1,5 @@
 package com.theciceroneapp.cicerone.model;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -37,15 +36,6 @@ public class APIHelper {
         Intent locationService = new Intent(context.getApplicationContext(), LocationService.class);
         context.startService(locationService);
 
-        final LocationsPromise promise =  new LocationsPromise() {
-            @Override
-            public void locationsFound(com.theciceroneapp.cicerone.model.Location[] locations) {
-                for(com.theciceroneapp.cicerone.model.Location l: locations) {
-                    System.out.println(l.getName());
-                }
-            }
-        };
-
         if (locationReceiver == null) {
             locationReceiver = new BroadcastReceiver() {
                 @Override
@@ -53,8 +43,6 @@ public class APIHelper {
                     latitude = (double) intent.getExtras().get("latitude");
                     longitude = (double) intent.getExtras().get("longitude");
                     System.out.printf("Lat: %f, Long: %f%n", latitude, longitude);
-                    getLocations(3000, null, promise);
-                    TripService.say("Test");
                 }
             };
         }
@@ -70,10 +58,11 @@ public class APIHelper {
         System.out.printf("Initial Lat: %f, Long: %f%n", latitude, longitude);
     }
 
-    public static void getLocations(double radius, String[] types, LocationsPromise prom) {
+    public static void getLocations(double radius, Mode mode, LocationsPromise prom) {
 
         String url ="https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="
-                + (float)latitude + "," + (float)longitude + "&radius=" + radius + "&type=restaurant&key=" + PLACE_API_KEY;
+                + (float)latitude + "," + (float)longitude + "&radius=" + radius + "&type=" + mode.getAPISTRING()
+                + "&rankby=prominence&key=" + PLACE_API_KEY;
         final LocationsPromise promise = prom;
 //        System.out.println(url);
 
@@ -87,15 +76,37 @@ public class APIHelper {
                             JSONArray res = response.getJSONArray("results");
                             com.theciceroneapp.cicerone.model.Location[] locations = new com.theciceroneapp.cicerone.model.Location[res.length()];
                             System.out.println("Response Length: " + res.length());
-                            //System.out.println(res.getJSONObject(0).getJSONObject("geometry").getJSONObject("location"));
+                            System.out.println(res.getJSONObject(0));
                             for (int i = 0; i < res.length(); i++) {
                                 JSONObject object = res.getJSONObject(i);
-                                double longi = object.getJSONObject("geometry").getJSONObject("location").getDouble("lng");
-                                double lat = object.getJSONObject("geometry").getJSONObject("location").getDouble("lat");
-                                String name = object.getString("name");
-                                String address = object.getString("vicinity");
+                                double longi = -3000;
+                                double lat = -3000;
+                                String name = "";
+                                String address = "";
+                                String[] types = null;
+                                if (object.has("geometry") && object.getJSONObject("geometry").has("location")) {
+                                    longi = object.getJSONObject("geometry").getJSONObject("location").getDouble("lng");
+                                    lat = object.getJSONObject("geometry").getJSONObject("location").getDouble("lat");
+                                }
 
-                                locations[i] = new com.theciceroneapp.cicerone.model.Location(longi, lat, name, address);
+                                if (object.has("name")) {
+                                    name = object.getString("name");
+                                }
+                                if (object.has("vicinity")) {
+                                    address = object.getString("vicinity");
+                                }
+
+                                if (object.has("types")) {
+                                    JSONArray JSONTypes = object.getJSONArray("types");
+                                    types = new String[JSONTypes.length()];
+                                    for (int j = 0; j < JSONTypes.length(); j++) {
+                                        types[j] = (String) JSONTypes.get(j);
+                                    }
+                                }
+
+                                if (types != null) {
+                                    locations[i] = new com.theciceroneapp.cicerone.model.Location(longi, lat, name, address, types);
+                                }
                             }
                             promise.locationsFound(locations);
                         } catch (JSONException e) {
