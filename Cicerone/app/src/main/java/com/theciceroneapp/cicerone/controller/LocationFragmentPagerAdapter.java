@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.theciceroneapp.cicerone.model.Trip;
+
 /**
  * Created by keshr on 10/14/2017.
  */
@@ -27,7 +29,13 @@ public class LocationFragmentPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         // CHANGE THIS TO CALL FOR LOCATION INDEX
-        return LocationFragment.newInstance(position + 1);
+        if (position == 0) {
+            // This is the page with OVERVIEW
+            return LocationFragment.newInstance(-2);
+        } else {
+            // This is the page with CURRENT LOCATION
+            return LocationFragment.newInstance(-1);
+        }
     }
 
     @Override

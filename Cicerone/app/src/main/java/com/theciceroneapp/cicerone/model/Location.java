@@ -107,7 +107,7 @@ public class Location {
         return navURL;
     }
 
-    public double getRating() {
-        return rating;
+    public String getRating() {
+        return "" + rating;
     }
 }

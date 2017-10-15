@@ -7,9 +7,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.theciceroneapp.cicerone.R;
 import com.theciceroneapp.cicerone.model.Location;
+import com.theciceroneapp.cicerone.model.Trip;
+
+import org.w3c.dom.Text;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +28,7 @@ public class LocationFragment extends Fragment {
     private static final String ARG_LOCATION = "ARG_LOCATION";
 
     private int mLocationIndex;
+    private Location location;
 
     private OnFragmentInteractionListener mListener;
 
@@ -53,6 +59,16 @@ public class LocationFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mLocationIndex = getArguments().getInt(ARG_LOCATION);
+            boolean locationExists = false;
+
+            if (mLocationIndex == -2) {
+                location = Trip.getLocale();
+            } else if (mLocationIndex == -1) {
+                location = Trip.getMostRecentLocation();
+            } else {
+                // Other indexes
+                location = Trip.locationAt(mLocationIndex);
+            }
         }
     }
 
@@ -62,10 +78,21 @@ public class LocationFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_location, container, false);
 
-        // SET VALUES FOR UI ELEMENTS HERE
-        // Ex: TextView textView = (TextView) view;
-        //     textView.setText("Fragment #" + mLocation);
-        //     return view;
+        TextView locationName = (TextView) view.findViewById(R.id.tvLocationName);
+        ImageView locationImage = (ImageView) view.findViewById(R.id.imvLocationPhoto);
+        TextView locationDescription = (TextView) view.findViewById(R.id.tvDescription);
+        TextView locationAddress = (TextView) view.findViewById(R.id.tvAddress);
+        TextView locationRating = (TextView) view.findViewById(R.id.tvRating);
+        TextView locationWebsite = (TextView) view.findViewById(R.id.tvWebsite);
+
+        // Avoid using an empty location
+        if (location != null) {
+            locationName.setText(location.getName());
+            locationDescription.setText(location.getDescription());
+            locationAddress.setText(location.getAddress());
+            locationRating.setText(location.getRating());
+            locationWebsite.setText(location.getWebsiteURL());
+        }
 
         return view;
     }
