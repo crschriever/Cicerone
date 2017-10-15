@@ -182,7 +182,8 @@ public class Trip {
                 }
                 if (!text.equals("")) {
                     locationsWithDecription.add(location);
-                    tripChangeListener.newMostRecentLocation(location);
+                    if (tripChangeListener != null)
+                        tripChangeListener.newMostRecentLocation(location);
                     TripService.say(text, tPromise);
                 } else {
                     APIHelper.getLocations(radius, modes, lPromise);
@@ -229,7 +230,8 @@ public class Trip {
                 if (locations[0].getTypes().contains("locality")) {
                     if (currentLocality == null || currentLocality.equals(locations[0])) {
                         currentLocality = locations[0];
-                        tripChangeListener.newLocality(currentLocality);
+                        if (tripChangeListener != null)
+                            tripChangeListener.newLocality(currentLocality);
                     }
                 }
             }
@@ -257,8 +259,8 @@ public class Trip {
         TripService.stop();
     }
 
-    public static void setTripChangeListener(TripChangeListener listener) {
-        singleton.tripChangeListener = listener;
+    public static List<Location> getLocations() {
+        return singleton.locationsWithDecription;
     }
 
     public static Location getMostRecentLocation() {

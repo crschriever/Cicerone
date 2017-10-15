@@ -28,8 +28,8 @@ public class APIHelper {
     private static final String GEOCODE_API_KEY = "AIzaSyANVyKNAsgFOjLRSiSHjsGcfcgEE4U47pY";
 
     private static BroadcastReceiver locationReceiver;
-    private static double latitude;
-    private static double longitude;
+    public static double latitude;
+    public static double longitude;
 
     private static RequestQueue queue;
 

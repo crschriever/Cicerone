@@ -30,6 +30,12 @@
             android:name=".controller.ModeSelectorActivity"
             android:parentActivityName=".controller.StartTripActivity" />
         <activity android:name=".controller.TripHomeActivity"></activity>
+
+        <activity android:name=".controller.LocationMapActivity"></activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBlslkJYt5ys5JM5hqDykbNMUt7ScjPBbQ"/>
     </application>
 
 </manifest>
