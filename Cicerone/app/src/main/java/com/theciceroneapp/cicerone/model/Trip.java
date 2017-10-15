@@ -1,16 +1,12 @@
 package com.theciceroneapp.cicerone.model;
 
-import android.app.Service;
 import android.os.Message;
-import android.widget.ListAdapter;
 
 import com.theciceroneapp.cicerone.controller.LocationMapActivity;
-import com.theciceroneapp.cicerone.controller.TripChangeListener;
 import com.theciceroneapp.cicerone.controller.TripHomeActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -61,7 +57,6 @@ public class Trip {
     public boolean tripGoing = true;
 
     private static Trip singleton;
-    private static TripChangeListener tripChangeListener;
 
     public Trip(ArrayList<Mode> modeList, int modeTravel) {
         singleton = this;
@@ -190,6 +185,9 @@ public class Trip {
                         m.obj = location;
                         LocationMapActivity.mHandler.sendMessage(m);
                     }
+                    if (TripHomeActivity.singleton != null) {
+                        TripHomeActivity.singleton.updateFragments();
+                    }
                     TripService.say(text, tPromise);
                 } else {
                     APIHelper.getLocations(radius, modes, lPromise);
@@ -236,14 +234,20 @@ public class Trip {
                 if (locations[0].getTypes().contains("locality")) {
                     if (currentLocality == null || currentLocality.equals(locations[0])) {
                         currentLocality = locations[0];
-                        if (tripChangeListener != null)
-                            tripChangeListener.newLocality(currentLocality);
+                        APIHelper.getWikiInformation(currentLocality, new InformationPromise() {
+                            @Override
+                            public void foundInformation(Location location, String text) {
+                                if (TripHomeActivity.singleton != null) {
+                                    TripHomeActivity.singleton.updateFragments();
+                                }
+                            }
+                        });
                     }
                 }
             }
         };
         Timer t = new Timer();
-        /*t.scheduleAtFixedRate(new TimerTask() {
+        t.scheduleAtFixedRate(new TimerTask() {
                                   @Override
                                   public void run() {
                                       try {
@@ -253,7 +257,7 @@ public class Trip {
                                       }
                                   }
                               },
-                0, LOCALITY_REFRESH);*/
+                0, LOCALITY_REFRESH);
     }
 
     public void startTrip() {

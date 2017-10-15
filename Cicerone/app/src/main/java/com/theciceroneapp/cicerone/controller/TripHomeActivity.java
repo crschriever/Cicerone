@@ -16,6 +16,8 @@ import com.theciceroneapp.cicerone.model.Trip;
 
 public class TripHomeActivity extends AppCompatActivity implements LocationFragment.OnFragmentInteractionListener {
 
+    public static TripHomeActivity singleton;
+
     LocationFragmentPagerAdapter lfpAdapter;
 
     @Override
@@ -33,12 +35,12 @@ public class TripHomeActivity extends AppCompatActivity implements LocationFragm
         // Give TabLayout the pager
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
+        singleton = this;
     }
 
     public void updateFragments() {
         lfpAdapter.notifyDataSetChanged();
     }
-
 
     @Override
     public void onFragmentInteraction(Uri uri) {
