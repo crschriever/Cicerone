@@ -59,7 +59,7 @@ public class LocationMapActivity extends FragmentActivity implements OnMapReadyC
     private void createMarker(Location location) {
         LatLng ll = new LatLng(location.getLatitude(), location.getLongitude());
         mMap.addMarker(new MarkerOptions().position(ll).title(location.getName()));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(APIHelper.latitude, APIHelper.longitude)));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(APIHelper.latitude, APIHelper.longitude)));
     }
 
 }
