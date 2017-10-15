@@ -47,7 +47,6 @@ public class NotificationService extends Service {
                 .setContentIntent(pt).build();
 
         NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        nm.cancelAll();
         nm.notify(NOTIFICATION_ID, nb);
     }
 

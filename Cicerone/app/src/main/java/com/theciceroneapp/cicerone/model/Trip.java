@@ -33,19 +33,19 @@ public class Trip {
 
     private double radius = 350;
     private final int MAX_RADIUS_WALKING = 600;
-    private final int MIN_RADIUS_WALKING = 30;
+    private final int MIN_RADIUS_WALKING = 300;
     private final float RADIUS_CHANGE_WALKING = .25f;
     private final int AFTER_SPEECH_WAIT_WALKING = 5;
     private final int FAILED_FIND_WAIT_WALKING = 5;
 
     private final int MAX_RADIUS_RIDING = 5000;
-    private final int MIN_RADIUS_RIDING = 200;
+    private final int MIN_RADIUS_RIDING = 400;
     private final float RADIUS_CHANGE_RIDING = .25f;
     private final int AFTER_SPEECH_WAIT_RIDING = 5;
     private final int FAILED_FIND_WAIT_RIDING = 5;
 
     private final int MAX_RADIUS_FLYING = 10000;
-    private final int MIN_RADIUS_FLYING = 200;
+    private final int MIN_RADIUS_FLYING = 1000;
     private final float RADIUS_CHANGE_FLYING = .25f;
     private final int AFTER_SPEECH_WAIT_FLYING = 5;
     private final int FAILED_FIND_WAIT_FLYING = 5;
