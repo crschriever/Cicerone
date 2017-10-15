@@ -72,8 +72,14 @@ public class ModeSelectorActivity extends AppCompatActivity {
                     } else {
                         trip = new Trip(modes, Trip.MODE_WALKING);
                     }
-                    trip.startTrip();
-
+                    final Trip finalTrip = trip;
+                    Thread tripRunner = new Thread() {
+                        @Override
+                        public void run() {
+                            finalTrip.startTrip();
+                        }
+                    };
+                    view.post(tripRunner);
 
                     Intent tripPage = new Intent(getApplicationContext(),
                             TripHomeActivity.class);

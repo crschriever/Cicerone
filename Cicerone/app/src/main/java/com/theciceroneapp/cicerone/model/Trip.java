@@ -34,20 +34,20 @@ public class Trip {
     private final int MAX_RADIUS_WALKING = 600;
     private final int MIN_RADIUS_WALKING = 30;
     private final float RADIUS_CHANGE_WALKING = .25f;
-    private final int AFTER_SPEECH_WAIT_WALKING = 2000;
-    private final int FAILED_FIND_WAIT_WALKING = 10000;
+    private final int AFTER_SPEECH_WAIT_WALKING = 5;
+    private final int FAILED_FIND_WAIT_WALKING = 5;
 
     private final int MAX_RADIUS_RIDING = 5000;
     private final int MIN_RADIUS_RIDING = 200;
     private final float RADIUS_CHANGE_RIDING = .25f;
-    private final int AFTER_SPEECH_WAIT_RIDING = 3000;
-    private final int FAILED_FIND_WAIT_RIDING = 10000;
+    private final int AFTER_SPEECH_WAIT_RIDING = 5;
+    private final int FAILED_FIND_WAIT_RIDING = 5;
 
     private final int MAX_RADIUS_FLYING = 10000;
     private final int MIN_RADIUS_FLYING = 200;
     private final float RADIUS_CHANGE_FLYING = .25f;
-    private final int AFTER_SPEECH_WAIT_FLYING = 10000;
-    private final int FAILED_FIND_WAIT_FLYING = 15000;
+    private final int AFTER_SPEECH_WAIT_FLYING = 5;
+    private final int FAILED_FIND_WAIT_FLYING = 5;
 
     private final int LOCALITY_REFRESH = 30000;
 
@@ -236,7 +236,7 @@ public class Trip {
             public void locationsFound(Location[] locations) {
                 System.out.println("Checking Locality");
 
-                if (locations[0].getTypes().contains("locality")) {
+                if (locations.length > 0 && locations[0].getTypes().contains("locality")) {
                     if (currentLocality == null || !currentLocality.equals(locations[0])) {
                         currentLocality = locations[0];
                         APIHelper.getWikiInformation(currentLocality, new InformationPromise() {
