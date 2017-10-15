@@ -1,5 +1,6 @@
 package com.theciceroneapp.cicerone.controller;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import com.theciceroneapp.cicerone.R;
 import com.theciceroneapp.cicerone.model.Mode;
@@ -26,7 +28,7 @@ public class ModeSelectorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_mode_selector);
 
         // Declare View objects
-        Switch mTourStatus = (Switch) findViewById(R.id.swtTourMode);
+        Switch mSilentStatus = (Switch) findViewById(R.id.swtSilentMode);
         final CheckBox mCultureStatus = (CheckBox) findViewById(R.id.chkCulture);
         final CheckBox mFoodStatus = (CheckBox) findViewById(R.id.chkFood);
         final CheckBox mEntStatus = (CheckBox) findViewById(R.id.chkEntertainment);
@@ -34,29 +36,6 @@ public class ModeSelectorActivity extends AppCompatActivity {
         final CheckBox[] chkGroup = {mBusinessStatus, mCultureStatus, mEntStatus, mFoodStatus};
         final RadioButton mInVehicle = (RadioButton) findViewById(R.id.radVehicle);
         final RadioButton mInPlane = (RadioButton) findViewById(R.id.radFlying);
-
-        // When tour mode is flipped, switch checkboxes being enabled
-        mTourStatus.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    for (CheckBox chk : chkGroup) {
-                        if (chk == mCultureStatus || chk == mEntStatus) {
-                            chk.setChecked(true);
-                        } else {
-                            chk.setChecked(false);
-                        }
-                        chk.setEnabled(false);
-                    }
-                } else {
-                    for (CheckBox chk : chkGroup) {
-                        chk.setEnabled(true);
-                    }
-                }
-            }
-        });
-
-
 
         final Button mTour = (Button) findViewById(R.id.btnTour);
         mTour.setOnClickListener(new View.OnClickListener() {
@@ -78,7 +57,12 @@ public class ModeSelectorActivity extends AppCompatActivity {
                 }
 
                 if (modes.isEmpty()) {
-                    // TODO: disable the button if nothing is selected
+                    Context context = getApplicationContext();
+                    CharSequence msg = "At least one category must be selected!";
+                    int duration = Toast.LENGTH_LONG;
+
+                    Toast toast = Toast.makeText(context, msg, duration);
+                    toast.show();
                 } else {
                     Trip trip;
                     if (mInVehicle.isChecked()) {

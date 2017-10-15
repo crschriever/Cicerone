@@ -21,13 +21,13 @@
         android:textStyle="italic" />
 
     <Switch
-        android:id="@+id/swtTourMode"
+        android:id="@+id/swtSilentMode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:text="@string/tour_mode"
+        android:text="Silent Mode"
         android:textSize="18sp" />
 
     <CheckBox
