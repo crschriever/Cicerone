@@ -94,8 +94,6 @@ public class ModeSelectorActivity extends AppCompatActivity {
                     Intent tripPage = new Intent(getApplicationContext(),
                             TripHomeActivity.class);
                     startActivity(tripPage);
-                    /*Intent mapPage = new Intent(getApplicationContext(), LocationMapActivity.class);
-                    startActivity(mapPage);*/
                 }
             }
         });
