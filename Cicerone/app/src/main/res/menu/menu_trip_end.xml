@@ -5,6 +5,10 @@
         android:orderInCategory="100"
         android:title="Show Map"/>
     <item
+        android:id="@+id/silent_mode"
+        android:title="Silent">
+    </item>
+    <item
         android:id="@+id/end_tour"
         android:title="End Tour">
     </item>

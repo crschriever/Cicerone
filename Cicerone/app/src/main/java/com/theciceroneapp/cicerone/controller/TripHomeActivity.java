@@ -67,6 +67,15 @@ public class TripHomeActivity extends AppCompatActivity implements LocationFragm
                 Intent returnHome = new Intent(getApplicationContext(), StartTripActivity.class);
                 startActivity(returnHome);
                 break;
+            case R.id.silent_mode:
+                if (item.getTitle().equals("Silent")) {
+                    item.setTitle("Speaker");
+                    Trip.silentMode(true);
+                } else {
+                    item.setTitle("Silent");
+                    Trip.silentMode(false);
+                }
+                break;
             default:
                 break;
         }

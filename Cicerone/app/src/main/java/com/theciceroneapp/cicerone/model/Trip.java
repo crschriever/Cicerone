@@ -55,6 +55,7 @@ public class Trip {
     public static final int MODE_WALKING = 1;
     public static final int MODE_RIDING = 2;
     public boolean tripGoing = true;
+    public boolean silentMode = false;
 
     private static Trip singleton;
 
@@ -188,7 +189,11 @@ public class Trip {
                     if (TripHomeActivity.singleton != null) {
                         TripHomeActivity.singleton.updateFragments();
                     }
-                    TripService.say(text, tPromise);
+                    if (!silentMode) {
+                        TripService.say(text, tPromise);
+                    } else {
+                        tPromise.talkingDone();
+                    }
                 } else {
                     APIHelper.getLocations(radius, modes, lPromise);
                 }
@@ -291,4 +296,8 @@ public class Trip {
         return singleton.locationsWithDecription.get(index);
     }
 
+    public static void silentMode(boolean b) {
+        singleton.silentMode = b;
+        TripService.singleton.stop();
+    }
 }

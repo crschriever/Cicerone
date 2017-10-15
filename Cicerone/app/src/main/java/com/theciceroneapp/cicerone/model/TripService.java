@@ -80,8 +80,15 @@ public class TripService extends Service {
         }
 
         @Override
-        public void onError(String utteranceId) {
+        public void onStop(String utterandeID, boolean interrupted) {
+            System.out.println("Stopped Talking");
+            promise.talkingDone();
+        }
 
+        @Override
+        public void onError(String utteranceId) {
+            System.out.println("Error Talking");
+            promise.talkingDone();
         }
     }
 
