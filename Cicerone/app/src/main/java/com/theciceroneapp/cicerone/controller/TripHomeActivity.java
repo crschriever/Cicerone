@@ -3,7 +3,6 @@ package com.theciceroneapp.cicerone.controller;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -59,7 +58,7 @@ public class TripHomeActivity extends AppCompatActivity implements LocationFragm
         switch (item.getItemId()) {
             // action with ID action_refresh was selected
             case R.id.show_map:
-                Intent map = new Intent(getApplicationContext(), LocationMapActivity.class);
+                Intent map = new Intent(getApplicationContext(), MapActivity.class);
                 startActivity(map);
                 break;
             // action with ID action_settings was selected

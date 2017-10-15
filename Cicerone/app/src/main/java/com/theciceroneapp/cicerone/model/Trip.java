@@ -2,7 +2,7 @@ package com.theciceroneapp.cicerone.model;
 
 import android.os.Message;
 
-import com.theciceroneapp.cicerone.controller.LocationMapActivity;
+import com.theciceroneapp.cicerone.controller.MapActivity;
 import com.theciceroneapp.cicerone.controller.TripHomeActivity;
 
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class Trip {
     private final int MIN_RADIUS_WALKING = 50;
     private final float RADIUS_CHANGE_WALKING = .25f;
     private final int AFTER_SPEECH_WAIT_WALKING = 1000;
-    private final int FAILED_FIND_WAIT_WALKING = 500;
+    private final int FAILED_FIND_WAIT_WALKING = 5000;
 
     private final int MAX_RADIUS_RIDING = 5000;
     private final int MIN_RADIUS_RIDING = 200;
@@ -49,7 +49,7 @@ public class Trip {
     private final int AFTER_SPEECH_WAIT_FLYING = 10000;
     private final int FAILED_FIND_WAIT_FLYING = 5000;
 
-    private final int LOCALITY_REFRESH = 1000;
+    private final int LOCALITY_REFRESH = 30000;
 
     public static final int MODE_FLYING = 0;
     public static final int MODE_WALKING = 1;
@@ -180,10 +180,10 @@ public class Trip {
                     locationsWithDecription.add(location);
                     /*if (tripChangeListener != null)
                         tripChangeListener.newMostRecentLocation(location);*/
-                    if (LocationMapActivity.mHandler != null) {
-                        Message m = LocationMapActivity.mHandler.obtainMessage();
+                    if (MapActivity.mHandler != null) {
+                        Message m = MapActivity.mHandler.obtainMessage();
                         m.obj = location;
-                        LocationMapActivity.mHandler.sendMessage(m);
+                        MapActivity.mHandler.sendMessage(m);
                     }
                     if (TripHomeActivity.singleton != null) {
                         TripHomeActivity.singleton.updateFragments();

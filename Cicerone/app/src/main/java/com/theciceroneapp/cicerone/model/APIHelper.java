@@ -98,10 +98,11 @@ public class APIHelper {
                             if (Math.abs(location.getLatitude() - lat) < 5 && Math.abs(location.getLongitude() - lon) < 5) {
                                 location.setDescription(text);
                                 if (location.getWebsiteURL().equals("")) {
-                                    location.setWebsiteURL("wikipedia.org/wiki/" + locationName);
+                                    location.setWebsiteURL("wikipedia.org/wiki/" + locationName.replaceAll("\\s", "_"));
                                 }
-                                promise.foundInformation(location, String.format("%s is %.1f miles to the %s. %s",
-                                        locationName, DistanceCalculator.distance(latitude, longitude, lat, lon, "M"),
+                                String distStr = String.format("%.1f", DistanceCalculator.distance(latitude, longitude, lat, lon, "M"));
+                                promise.foundInformation(location, String.format("%s is %s miles to the %s. %s",
+                                        locationName, distStr,
                                         BearingCalculator.calculateBearing(latitude, longitude, lat, lon), text));
                             } else {
                                 promise.foundInformation(location, "");

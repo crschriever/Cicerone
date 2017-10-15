@@ -31,7 +31,7 @@
             android:parentActivityName=".controller.StartTripActivity" />
         <activity android:name=".controller.TripHomeActivity"></activity>
         <activity
-            android:name=".controller.LocationMapActivity"
+            android:name=".controller.MapActivity"
             android:parentActivityName=".controller.TripHomeActivity"></activity>
 
         <meta-data

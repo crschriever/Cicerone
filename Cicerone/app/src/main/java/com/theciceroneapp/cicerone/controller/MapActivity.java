@@ -20,7 +20,7 @@ import com.theciceroneapp.cicerone.model.TripService;
 import java.util.List;
 import android.os.Handler;
 
-public class LocationMapActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     public static Handler mHandler;

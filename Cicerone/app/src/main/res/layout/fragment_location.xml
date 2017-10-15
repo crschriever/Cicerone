@@ -81,6 +81,7 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="20dp"
                     android:paddingTop="5dp"
+                    android:autoLink="web"
                     android:text="@string/default_website" />
 
                 <TextView

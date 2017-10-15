@@ -83,9 +83,12 @@ public class LocationFragment extends Fragment {
         TextView locationName = (TextView) view.findViewById(R.id.tvLocationName);
         ImageView locationImage = (ImageView) view.findViewById(R.id.imvLocationPhoto);
         TextView locationDescription = (TextView) view.findViewById(R.id.tvDescription);
+        TextView locationDescriptionTitle = (TextView) view.findViewById(R.id.tvDescriptionTitle);
         TextView locationAddress = (TextView) view.findViewById(R.id.tvAddress);
         TextView locationRating = (TextView) view.findViewById(R.id.tvRating);
+        TextView locationRatingTitle = (TextView) view.findViewById(R.id.tvRatingTitle);
         TextView locationWebsite = (TextView) view.findViewById(R.id.tvWebsite);
+
 
         // Avoid using an empty location
         if (location != null) {
@@ -94,13 +97,32 @@ public class LocationFragment extends Fragment {
             locationAddress.setText(location.getAddress());
             locationRating.setText(location.getRating());
             locationWebsite.setText(location.getWebsiteURL());
+            if (location.getName() == null || location.getName().equals("")) {
+                locationName.setVisibility(View.GONE);
+            }
+            if (location.getDescription() == null || location.getDescription().equals("")) {
+                locationDescription.setVisibility(View.GONE);
+                locationDescriptionTitle.setVisibility(View.GONE);
+            }
+            if (location.getAddress() == null || location.getAddress().equals("")) {
+                locationAddress.setVisibility(View.GONE);
+            }
+            if (location.getRating() == null || location.getRating().equals("-1.0")|| location.getRating().equals("")) {
+                locationRating.setVisibility(View.GONE);
+                locationRatingTitle.setVisibility(View.GONE);
+            }
+            if (location.getWebsiteURL() == null || location.getWebsiteURL().equals("")) {
+                locationWebsite.setVisibility(View.GONE);
+            }
         } else {
             // I want these invisible
-//            locationName.setText(location.getName());
-//            locationDescription.setText(location.getDescription());
-//            locationAddress.setText(location.getAddress());
-//            locationRating.setText(location.getRating());
-//            locationWebsite.setText(location.getWebsiteURL());
+            locationName.setVisibility(View.GONE);
+            locationDescription.setVisibility(View.GONE);
+            locationDescriptionTitle.setVisibility(View.GONE);
+            locationAddress.setVisibility(View.GONE);
+            locationRating.setVisibility(View.GONE);
+            locationRatingTitle.setVisibility(View.GONE);
+            locationWebsite.setVisibility(View.GONE);
         }
 
         return view;
