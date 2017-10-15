@@ -20,7 +20,7 @@ import com.theciceroneapp.cicerone.model.TripService;
 import java.util.List;
 import android.os.Handler;
 
-public class LocationMapActivity extends FragmentActivity implements OnMapReadyCallback, TripChangeListener {
+public class LocationMapActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     public static Handler mHandler;
@@ -36,7 +36,7 @@ public class LocationMapActivity extends FragmentActivity implements OnMapReadyC
         mHandler = new Handler(Looper.getMainLooper()) {
           @Override
           public void handleMessage(Message m) {
-              System.out.println(m.obj);
+              createMarker((Location) m.obj);
           }
         };
     }
@@ -46,18 +46,14 @@ public class LocationMapActivity extends FragmentActivity implements OnMapReadyC
         List<Location> locations = Trip.getLocations();
 
         mMap = googleMap;
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(APIHelper.latitude, APIHelper.longitude), 15));
+        mMap.setMyLocationEnabled(true);
+        mMap.getUiSettings().setMyLocationButtonEnabled(true);
 
         for (int i = 0; i < locations.size(); i++) {
             Location location = locations.get(i);
             createMarker(location);
         }
-
-        mHandler = new Handler(Looper.getMainLooper()) {
-            @Override
-            public void handleMessage(Message inputMessage) {
-
-            }
-        };
     }
 
     private void createMarker(Location location) {
@@ -66,13 +62,4 @@ public class LocationMapActivity extends FragmentActivity implements OnMapReadyC
         mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(APIHelper.latitude, APIHelper.longitude)));
     }
 
-    @Override
-    public void newLocality(Location loc) {
-
-    }
-
-    @Override
-    public void newMostRecentLocation(Location loc) {
-        createMarker(loc);
-    }
 }
