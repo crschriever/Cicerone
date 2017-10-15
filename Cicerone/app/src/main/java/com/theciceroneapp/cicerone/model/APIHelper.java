@@ -24,7 +24,7 @@ import org.json.JSONObject;
 
 public class APIHelper {
 
-    private static final String PLACE_API_KEY = "AIzaSyBInMdH8pnh1ylbZNnXCnLPndOeWJgk-Uc";
+    private static final String PLACE_API_KEY = "AIzaSyAunKMc3UqYOhL8wZ5pclzgu75hYcYbBVw";
     private static final String GEOCODE_API_KEY = "AIzaSyANVyKNAsgFOjLRSiSHjsGcfcgEE4U47pY";
 
     private static BroadcastReceiver locationReceiver;
@@ -138,7 +138,7 @@ public class APIHelper {
                 + (float)latitude + "," + (float)longitude + "&radius=" + (float)radius + "&type=" + Mode.getCombinedAPIString(modes)
                 + "&rankby=prominence&key=" + PLACE_API_KEY;
         final LocationsPromise promise = prom;
-        //System.out.println(url);
+        System.out.println(url);
 
         // Request a string response from the provided URL.
         JsonObjectRequest request = new JsonObjectRequest (Request.Method.GET, url, null,
