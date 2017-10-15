@@ -269,4 +269,8 @@ public class Trip {
         return singleton.currentLocality;
     }
 
+    public static Location locationAt(int index) {
+        return singleton.locationsWithDecription.get(index);
+    }
+
 }
