@@ -85,7 +85,7 @@ public class APIHelper {
                             text = text.replaceAll("(?s)<[^>]*>(\\s*<[^>]*>)*", "");
                             text = text.replaceAll("\\[.*\\]", "");
                             text = text.replaceAll("\\(.*\\)", "");
-                            System.out.println(text);
+                            //System.out.println(text);
 
                             String regex = "<span class=\"geo\">";
                             int locationIndex = res.indexOf(regex) + regex.length();
@@ -98,7 +98,7 @@ public class APIHelper {
                             if (Math.abs(location.getLatitude() - lat) < 5 && Math.abs(location.getLongitude() - lon) < 5) {
                                 location.setDescription(text);
                                 if (location.getWebsiteURL().equals("")) {
-                                    location.setWebsiteURL("wikipedia.org/wiki/" + locationName.replaceAll("\\s", "_"));
+                                    location.setWebsiteURL("wikipedia.org/wiki/" + locationName.replaceAll("\\s", "%20"));
                                 }
                                 String distStr = String.format("%.1f", DistanceCalculator.distance(latitude, longitude, lat, lon, "M"));
                                 promise.foundInformation(location, String.format("%s is %s miles to the %s. %s",
@@ -138,7 +138,7 @@ public class APIHelper {
                 + (float)latitude + "," + (float)longitude + "&radius=" + (float)radius + "&type=" + Mode.getCombinedAPIString(modes)
                 + "&rankby=prominence&key=" + PLACE_API_KEY;
         final LocationsPromise promise = prom;
-        System.out.println(url);
+        //System.out.println(url);
 
         // Request a string response from the provided URL.
         JsonObjectRequest request = new JsonObjectRequest (Request.Method.GET, url, null,
@@ -146,10 +146,10 @@ public class APIHelper {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            System.out.println(response);
+                            //System.out.println(response);
                             JSONArray res = response.getJSONArray("results");
                             com.theciceroneapp.cicerone.model.Location[] locations = new com.theciceroneapp.cicerone.model.Location[res.length()];
-                            System.out.println("Response Length: " + res.length());
+                            //System.out.println("Response Length: " + res.length());
                             //System.out.println(res.getJSONObject(0));
                             for (int i = 0; i < res.length(); i++) {
                                 JSONObject object = res.getJSONObject(i);

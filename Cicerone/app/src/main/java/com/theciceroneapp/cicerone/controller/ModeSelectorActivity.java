@@ -28,7 +28,7 @@ public class ModeSelectorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_mode_selector);
 
         // Declare View objects
-        Switch mSilentStatus = (Switch) findViewById(R.id.swtSilentMode);
+        final Switch mSilentStatus = (Switch) findViewById(R.id.swtSilentMode);
         final CheckBox mCultureStatus = (CheckBox) findViewById(R.id.chkCulture);
         final CheckBox mFoodStatus = (CheckBox) findViewById(R.id.chkFood);
         final CheckBox mEntStatus = (CheckBox) findViewById(R.id.chkEntertainment);
@@ -73,6 +73,7 @@ public class ModeSelectorActivity extends AppCompatActivity {
                         trip = new Trip(modes, Trip.MODE_WALKING);
                     }
                     final Trip finalTrip = trip;
+                    trip.silentMode(mSilentStatus.isChecked());
                     Thread tripRunner = new Thread() {
                         @Override
                         public void run() {
