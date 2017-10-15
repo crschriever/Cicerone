@@ -14,6 +14,7 @@ import android.widget.Button;
 import com.theciceroneapp.cicerone.R;
 import com.theciceroneapp.cicerone.model.APIHelper;
 import com.theciceroneapp.cicerone.model.LocationService;
+import com.theciceroneapp.cicerone.model.NotificationService;
 import com.theciceroneapp.cicerone.model.TripService;
 
 public class StartTripActivity extends AppCompatActivity {
@@ -45,8 +46,11 @@ public class StartTripActivity extends AppCompatActivity {
         }
 
         //Speech service
+        Intent i = new Intent(getApplicationContext(), NotificationService.class);
+        startService(i);
         Intent speechService = new Intent(getApplicationContext(), TripService.class);
         startService(speechService);
+
     }
 
     private void enableLocationServices() {

@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.theciceroneapp.cicerone.R;
 import com.theciceroneapp.cicerone.model.Mode;
+import com.theciceroneapp.cicerone.model.NotificationService;
 import com.theciceroneapp.cicerone.model.Trip;
 
 import java.util.ArrayList;
@@ -73,6 +74,7 @@ public class ModeSelectorActivity extends AppCompatActivity {
                         trip = new Trip(modes, Trip.MODE_WALKING);
                     }
                     final Trip finalTrip = trip;
+
                     trip.silentMode(mSilentStatus.isChecked());
                     Thread tripRunner = new Thread() {
                         @Override

@@ -20,6 +20,7 @@ import java.util.TimerTask;
 public class Trip {
 
     private HashSet<Location> locations = new HashSet<>();
+    private HashSet<Location> badLocations = new HashSet<>();
     private List<Location> locationsWithDecription = new ArrayList<>();
     private Mode[] modes;
 
@@ -91,6 +92,7 @@ public class Trip {
                     };
                 });
                 boolean firstSelected = false;
+                int count = 0;
                 for(com.theciceroneapp.cicerone.model.Location l: locations) {
                     if (!thisTrip.locations.contains(l) && !l.getTypes().contains("locality")) {
                         if (!firstSelected) {
@@ -99,15 +101,17 @@ public class Trip {
                             System.out.println(l.getName());
                             firstSelected = true;
                         }
+                    } else if (!badLocations.contains(l)) {
+                        count++;
                     }
                 }
 
                 // Changing radius based on the amount or responses
 
                 if (modeOFTravel == MODE_WALKING) {
-                    if (locations.length > 10) {
+                    if (count > 10) {
                         radius *= (1.0 - RADIUS_CHANGE_WALKING);
-                    } else if (locations.length < 3) {
+                    } else if (count < 3) {
                         radius *= (1.0 + RADIUS_CHANGE_WALKING);
                     }
 
@@ -117,9 +121,9 @@ public class Trip {
                         radius = MAX_RADIUS_WALKING;
                     }
                 } else if (modeOFTravel == MODE_RIDING) {
-                    if (locations.length > 10) {
+                    if (count > 10) {
                         radius *= (1.0 - RADIUS_CHANGE_RIDING);
-                    } else if (locations.length < 3) {
+                    } else if (count < 3) {
                         radius *= (1.0 + RADIUS_CHANGE_RIDING);
                     }
 
@@ -129,9 +133,9 @@ public class Trip {
                         radius = MAX_RADIUS_RIDING;
                     }
                 } else if (modeOFTravel == MODE_FLYING) {
-                    if (locations.length > 10) {
+                    if (count > 10) {
                         radius *= (1.0 - RADIUS_CHANGE_FLYING);
-                    } else if (locations.length < 3) {
+                    } else if (count < 3) {
                         radius *= (1.0 + RADIUS_CHANGE_FLYING);
                     }
 
@@ -144,7 +148,7 @@ public class Trip {
                     System.out.println("ERROR: Invalid modeOfTravel");
                 }
 
-                System.out.println("Radius: " + radius);
+                System.out.println("Radius: " + radius + ". Count: " + count);
 
                 if (!firstSelected) {
                     try {
@@ -192,9 +196,11 @@ public class Trip {
                     if (!silentMode) {
                         TripService.say(text, tPromise);
                     } else {
+                        NotificationService.singleton.start(location.getName(), text);
                         tPromise.talkingDone();
                     }
                 } else {
+                    badLocations.add(location);
                     APIHelper.getLocations(radius, modes, lPromise);
                 }
                 System.out.println(locations);
