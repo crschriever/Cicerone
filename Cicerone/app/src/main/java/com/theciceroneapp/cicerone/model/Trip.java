@@ -1,8 +1,10 @@
 package com.theciceroneapp.cicerone.model;
 
 import android.app.Service;
+import android.os.Message;
 import android.widget.ListAdapter;
 
+import com.theciceroneapp.cicerone.controller.LocationMapActivity;
 import com.theciceroneapp.cicerone.controller.TripChangeListener;
 import com.theciceroneapp.cicerone.controller.TripHomeActivity;
 
@@ -14,7 +16,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Handler;
 
 /**
  * Created by crsch on 10/14/2017.
@@ -182,8 +183,11 @@ public class Trip {
                 }
                 if (!text.equals("")) {
                     locationsWithDecription.add(location);
-                    if (tripChangeListener != null)
-                        tripChangeListener.newMostRecentLocation(location);
+                    /*if (tripChangeListener != null)
+                        tripChangeListener.newMostRecentLocation(location);*/
+                    Message m = LocationMapActivity.mHandler.obtainMessage();
+                    m.obj = location;
+                    LocationMapActivity.mHandler.sendMessage(m);
                     TripService.say(text, tPromise);
                 } else {
                     APIHelper.getLocations(radius, modes, lPromise);
