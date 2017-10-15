@@ -56,7 +56,11 @@ public class Trip {
     public static final int MODE_RIDING = 2;
     public boolean tripGoing = true;
 
+    private static Trip singleton;
+
     public Trip(ArrayList<Mode> modeList, int modeTravel) {
+        singleton = this;
+
         this.modes = new Mode[modeList.size()];
         for (int i = 0; i < modeList.size(); i++) {
             modes[i] = modeList.get(i);
@@ -246,6 +250,10 @@ public class Trip {
     public void stopTrip() {
         tripGoing = false;
         TripService.stop();
+    }
+
+    public static Location getMostRecentLocation() {
+        return singleton.locationsWithDecription.get(singleton.locationsWithDecription.size() - 1);
     }
 
 }
