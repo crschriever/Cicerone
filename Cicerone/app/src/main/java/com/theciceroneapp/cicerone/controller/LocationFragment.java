@@ -4,7 +4,6 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +13,6 @@ import android.widget.TextView;
 import com.theciceroneapp.cicerone.R;
 import com.theciceroneapp.cicerone.model.Location;
 import com.theciceroneapp.cicerone.model.Trip;
-
-import org.w3c.dom.Text;
 
 /**
  * A simple {@link Fragment} subclass.

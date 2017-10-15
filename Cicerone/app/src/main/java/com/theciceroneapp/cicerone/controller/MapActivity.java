@@ -1,5 +1,6 @@
 package com.theciceroneapp.cicerone.controller;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.Message;
@@ -10,6 +11,7 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.theciceroneapp.cicerone.R;
 import com.theciceroneapp.cicerone.model.APIHelper;
@@ -54,6 +56,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             Location location = locations.get(i);
             createMarker(location);
         }
+
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                Intent intent1 = new Intent(getApplicationContext(), LocationDisplayerActivity.class);
+                startActivity(intent1);
+            }
+        });
     }
 
     private void createMarker(Location location) {

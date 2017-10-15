@@ -39,6 +39,10 @@ public class LocationFragmentPagerAdapter extends FragmentStatePagerAdapter {
         }
     }
 
+    public static Fragment getItemByIndex(int index) {
+        return LocationFragment.newInstance(index);
+    }
+
     @Override
     public CharSequence getPageTitle(int position) {
         // Generate title based on item position

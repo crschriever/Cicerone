@@ -33,6 +33,7 @@
         <activity
             android:name=".controller.MapActivity"
             android:parentActivityName=".controller.TripHomeActivity"></activity>
+        <activity android:name=".controller.LocationDisplayerActivity"></activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
