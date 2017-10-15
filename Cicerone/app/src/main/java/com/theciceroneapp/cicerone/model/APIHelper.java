@@ -202,7 +202,7 @@ public class APIHelper {
                             promise.locationsFound(locations);
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            promise.locationsFound(new Location[]{});
+                            promise.locationsFound(new com.theciceroneapp.cicerone.model.Location[]{});
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -210,7 +210,7 @@ public class APIHelper {
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
                 System.out.println("Error! Request PLACE API failed");
-                promise.locationsFound(new Location[]{});
+                promise.locationsFound(new com.theciceroneapp.cicerone.model.Location[]{});
             }
         });
 
