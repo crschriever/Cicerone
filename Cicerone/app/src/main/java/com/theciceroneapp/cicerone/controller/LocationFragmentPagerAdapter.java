@@ -4,6 +4,8 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.util.Log;
 
 import com.theciceroneapp.cicerone.model.Trip;
 
@@ -11,7 +13,7 @@ import com.theciceroneapp.cicerone.model.Trip;
  * Created by keshr on 10/14/2017.
  */
 
-public class LocationFragmentPagerAdapter extends FragmentPagerAdapter {
+public class LocationFragmentPagerAdapter extends FragmentStatePagerAdapter {
     final int PAGE_COUNT = 2;
     private String tabTitles[] = new String[] {"Overview", "Current Location"};
     private Context context;
@@ -29,6 +31,7 @@ public class LocationFragmentPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         // CHANGE THIS TO CALL FOR LOCATION INDEX
+        Log.d("FRAGMENT", "GETTING ITEM");
         if (position == 0) {
             // This is the page with OVERVIEW
             return LocationFragment.newInstance(-2);
