@@ -59,7 +59,7 @@ public class LocationFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mLocationIndex = getArguments().getInt(ARG_LOCATION);
-            boolean locationExists = false;
+
 
             if (mLocationIndex == -2) {
                 location = Trip.getLocale();
@@ -92,6 +92,13 @@ public class LocationFragment extends Fragment {
             locationAddress.setText(location.getAddress());
             locationRating.setText(location.getRating());
             locationWebsite.setText(location.getWebsiteURL());
+        } else {
+            // I want these invisible
+//            locationName.setText(location.getName());
+//            locationDescription.setText(location.getDescription());
+//            locationAddress.setText(location.getAddress());
+//            locationRating.setText(location.getRating());
+//            locationWebsite.setText(location.getWebsiteURL());
         }
 
         return view;
