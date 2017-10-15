@@ -232,7 +232,7 @@ public class Trip {
                 System.out.println("Checking Locality");
 
                 if (locations[0].getTypes().contains("locality")) {
-                    if (currentLocality == null || currentLocality.equals(locations[0])) {
+                    if (currentLocality == null || !currentLocality.equals(locations[0])) {
                         currentLocality = locations[0];
                         APIHelper.getWikiInformation(currentLocality, new InformationPromise() {
                             @Override
