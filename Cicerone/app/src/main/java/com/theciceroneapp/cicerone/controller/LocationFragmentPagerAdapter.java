@@ -11,7 +11,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 public class LocationFragmentPagerAdapter extends FragmentPagerAdapter {
     final int PAGE_COUNT = 2;
-    private String tabTitles[] = new String[] { "Overview", "Current Location"};
+    private String tabTitles[] = new String[] {"Overview", "Current Location"};
     private Context context;
 
     public LocationFragmentPagerAdapter(FragmentManager fm, Context context) {
@@ -26,6 +26,7 @@ public class LocationFragmentPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+        // CHANGE THIS TO CALL FOR LOCATION INDEX
         return LocationFragment.newInstance(position + 1);
     }
 
