@@ -30,8 +30,6 @@ public class LocationFragmentPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        // CHANGE THIS TO CALL FOR LOCATION INDEX
-        Log.d("FRAGMENT", "GETTING ITEM");
         if (position == 0) {
             // This is the page with OVERVIEW
             return LocationFragment.newInstance(-2);
