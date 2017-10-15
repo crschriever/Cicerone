@@ -185,9 +185,11 @@ public class Trip {
                     locationsWithDecription.add(location);
                     /*if (tripChangeListener != null)
                         tripChangeListener.newMostRecentLocation(location);*/
-                    Message m = LocationMapActivity.mHandler.obtainMessage();
-                    m.obj = location;
-                    LocationMapActivity.mHandler.sendMessage(m);
+                    if (LocationMapActivity.mHandler != null) {
+                        Message m = LocationMapActivity.mHandler.obtainMessage();
+                        m.obj = location;
+                        LocationMapActivity.mHandler.sendMessage(m);
+                    }
                     TripService.say(text, tPromise);
                 } else {
                     APIHelper.getLocations(radius, modes, lPromise);
