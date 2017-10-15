@@ -10,7 +10,8 @@ public enum Mode {
     CULTURE("park|art_gallery|stadium|aquarium|campground|zoo|university|local_government_office|library|casino|cemetery"),
     FOOD("restaurant|meal_takeaway|meal_delivery|cafe|bakery|bar|liquor_store"),
     ENTERTAINMENT("amusement_park|night_club|casino|aquarium|movie_theater|bowling_alley|museum|zoo|shopping_mall|stadium|park"),
-    BUSINESS("");
+    BUSINESS(""),
+    LOCALITY("");
 
     private String placesAPIString;
     private String[] types;

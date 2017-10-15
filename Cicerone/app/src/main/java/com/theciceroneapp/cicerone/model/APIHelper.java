@@ -25,6 +25,7 @@ import org.json.JSONObject;
 public class APIHelper {
 
     private static final String PLACE_API_KEY = "AIzaSyBInMdH8pnh1ylbZNnXCnLPndOeWJgk-Uc";
+    private static final String GEOCODE_API_KEY = "AIzaSyANVyKNAsgFOjLRSiSHjsGcfcgEE4U47pY";
 
     private static BroadcastReceiver locationReceiver;
     private static double latitude;
@@ -76,7 +77,7 @@ public class APIHelper {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            System.out.println(response);
+                            //System.out.println(response);
                             String res = response.getJSONObject("parse").getJSONObject("text").getString("*");
                             int start = res.indexOf("<p>");
                             int end = res.indexOf("</p>", start);
@@ -96,6 +97,9 @@ public class APIHelper {
 
                             if (Math.abs(location.getLatitude() - lat) < 5 && Math.abs(location.getLongitude() - lon) < 5) {
                                 location.setDescription(text);
+                                if (location.getWebsiteURL().equals("")) {
+                                    location.setWebsiteURL("wikipedia.org/wiki/" + locationName);
+                                }
                                 promise.foundInformation(location, String.format("%s is %.1f miles to the %s. %s",
                                         locationName, DistanceCalculator.distance(latitude, longitude, lat, lon, "M"),
                                         BearingCalculator.calculateBearing(latitude, longitude, lat, lon), text));
@@ -141,7 +145,7 @@ public class APIHelper {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            //System.out.println(response);
+                            System.out.println(response);
                             JSONArray res = response.getJSONArray("results");
                             com.theciceroneapp.cicerone.model.Location[] locations = new com.theciceroneapp.cicerone.model.Location[res.length()];
                             System.out.println("Response Length: " + res.length());
@@ -153,6 +157,10 @@ public class APIHelper {
                                 String name = "";
                                 String address = "";
                                 String[] types = null;
+                                String websiteURL = "";
+                                String mapsURL = "";
+                                double rating = -1;
+
                                 if (object.has("geometry") && object.getJSONObject("geometry").has("location")) {
                                     longi = object.getJSONObject("geometry").getJSONObject("location").getDouble("lng");
                                     lat = object.getJSONObject("geometry").getJSONObject("location").getDouble("lat");
@@ -173,8 +181,21 @@ public class APIHelper {
                                     }
                                 }
 
+                                if (object.has("website")) {
+                                    websiteURL = object.getString("website");
+                                }
+
+                                if (object.has("url")) {
+                                    mapsURL = object.getString("url");
+                                }
+
+                                if (object.has("rating")) {
+                                    rating = object.getDouble("rating");
+                                }
+
                                 if (types != null) {
-                                    locations[i] = new com.theciceroneapp.cicerone.model.Location(longi, lat, name, address, types);
+                                    locations[i] = new com.theciceroneapp.cicerone.model.Location(longi, lat, name, address, types,
+                                            websiteURL, mapsURL, rating);
                                 }
                             }
                             promise.locationsFound(locations);

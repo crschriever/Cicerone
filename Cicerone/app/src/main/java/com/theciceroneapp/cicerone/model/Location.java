@@ -13,8 +13,12 @@ public class Location {
     private final String address;
     private final HashSet<String> types = new HashSet<>();
     private String description;
+    private String websiteURL;
+    private String navURL;
+    private double rating;
 
-    public Location(double longitude, double latitude, String name, String address, String[] types) {
+    public Location(double longitude, double latitude, String name, String address, String[] types,
+                    String websiteURL, String navURL, double rating) {
         this.longitude = longitude;
         this.latitude = latitude;
         this.name = name;
@@ -22,12 +26,23 @@ public class Location {
         for (String s: types) {
             this.types.add(s);
         }
+        this.websiteURL = websiteURL;
+        this.navURL = navURL;
+        this.rating = rating;
     }
 
     @Override
     public String toString() {
         return "Location{" +
-                "name='" + name + '\'' +
+                "longitude=" + longitude +
+                ", latitude=" + latitude +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", types=" + types +
+                ", description='" + description + '\'' +
+                ", websiteURL='" + websiteURL + '\'' +
+                ", navURL='" + navURL + '\'' +
+                ", rating=" + rating +
                 '}';
     }
 
@@ -78,5 +93,21 @@ public class Location {
 
     public String getDescription() {
         return description;
+    }
+
+    public String getWebsiteURL() {
+        return websiteURL;
+    }
+
+    public void setWebsiteURL(String s) {
+        websiteURL = s;
+    }
+
+    public String getNavURL() {
+        return navURL;
+    }
+
+    public double getRating() {
+        return rating;
     }
 }

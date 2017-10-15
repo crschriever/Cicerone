@@ -9,6 +9,9 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.logging.Handler;
 
 /**
  * Created by crsch on 10/14/2017.
@@ -19,13 +22,16 @@ public class Trip {
     private HashSet<Location> locations = new HashSet<>();
     private List<Location> locationsWithDecription = new ArrayList<>();
     private Mode[] modes;
+
+    private Location currentLocality;
+
     private final int modeOFTravel;
     private final LocationsPromise<Location[]> lPromise;
     private final TalkPromise tPromise;
     private final InformationPromise dPromise;
 
     private double radius = 500;
-    private final int MAX_RADIUS_WALKING = 500;
+    private final int MAX_RADIUS_WALKING = 700;
     private final int MIN_RADIUS_WALKING = 50;
     private final float RADIUS_CHANGE_WALKING = .25f;
     private final int AFTER_SPEECH_WAIT_WALKING = 1000;
@@ -43,12 +49,18 @@ public class Trip {
     private final int AFTER_SPEECH_WAIT_FLYING = 10000;
     private final int FAILED_FIND_WAIT_FLYING = 5000;
 
+    private final int LOCALITY_REFRESH = 1000;
+
     public static final int MODE_FLYING = 0;
     public static final int MODE_WALKING = 1;
     public static final int MODE_RIDING = 2;
     public boolean tripGoing = true;
 
+    private static Trip singleton;
+
     public Trip(ArrayList<Mode> modeList, int modeTravel) {
+        singleton = this;
+
         this.modes = new Mode[modeList.size()];
         for (int i = 0; i < modeList.size(); i++) {
             modes[i] = modeList.get(i);
@@ -79,7 +91,7 @@ public class Trip {
                 });
                 boolean firstSelected = false;
                 for(com.theciceroneapp.cicerone.model.Location l: locations) {
-                    if (!thisTrip.locations.contains(l)) {
+                    if (!thisTrip.locations.contains(l) && !l.getTypes().contains("locality")) {
                         if (!firstSelected) {
                             APIHelper.getWikiInformation(l, dPromise);
                             thisTrip.locations.add(l);
@@ -130,6 +142,8 @@ public class Trip {
                 } else {
                     System.out.println("ERROR: Invalid modeOfTravel");
                 }
+
+                System.out.println("Radius: " + radius);
 
                 if (!firstSelected) {
                     try {
@@ -201,6 +215,32 @@ public class Trip {
                 APIHelper.getLocations(radius, modes, lPromise);
             }
         };
+
+        final LocationsPromise<Location[]> localityPromise = new LocationsPromise<Location[]>() {
+            @Override
+            public void locationsFound(Location[] locations) {
+                System.out.println("Checking Locality");
+
+                if (locations[0].getTypes().contains("locality")) {
+                    if (currentLocality == null || currentLocality.equals(locations[0])) {
+                        currentLocality = locations[0];
+                        //TODO update locality
+                    }
+                }
+            }
+        };
+        Timer t = new Timer();
+        /*t.scheduleAtFixedRate(new TimerTask() {
+                                  @Override
+                                  public void run() {
+                                      try {
+                                          APIHelper.getLocations(radius, new Mode[]{Mode.LOCALITY}, localityPromise);
+                                      } catch (Exception e) {
+                                          e.printStackTrace();
+                                      }
+                                  }
+                              },
+                0, LOCALITY_REFRESH);*/
     }
 
     public void startTrip() {
@@ -210,6 +250,10 @@ public class Trip {
     public void stopTrip() {
         tripGoing = false;
         TripService.stop();
+    }
+
+    public static Location getMostRecentLocation() {
+        return singleton.locationsWithDecription.get(singleton.locationsWithDecription.size() - 1);
     }
 
 }
