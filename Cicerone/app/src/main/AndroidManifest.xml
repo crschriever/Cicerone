@@ -28,12 +28,8 @@
 
         <activity
             android:name=".controller.ModeSelectorActivity"
-            android:parentActivityName=".controller.StartTripActivity"></activity>
-        <activity
-            android:name=".controller.ThisTripActivity"
-            android:label="@string/title_activity_this_trip"
-            android:parentActivityName=".controller.ModeSelectorActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:parentActivityName=".controller.StartTripActivity" />
+        <activity android:name=".controller.TripHomeActivity"></activity>
     </application>
 
 </manifest>

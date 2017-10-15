@@ -92,7 +92,7 @@ public class ModeSelectorActivity extends AppCompatActivity {
 
 
                     Intent tripPage = new Intent(getApplicationContext(),
-                            ThisTripActivity.class);
+                            TripHomeActivity.class);
                     startActivity(tripPage);
                 }
             }
