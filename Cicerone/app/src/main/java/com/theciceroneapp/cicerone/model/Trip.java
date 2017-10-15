@@ -264,6 +264,9 @@ public class Trip {
     }
 
     public static Location getMostRecentLocation() {
+        if (singleton.locationsWithDecription.size() == 0) {
+            return null;
+        }
         return singleton.locationsWithDecription.get(singleton.locationsWithDecription.size() - 1);
     }
 
@@ -272,6 +275,9 @@ public class Trip {
     }
 
     public static Location locationAt(int index) {
+        if (index >= singleton.locationsWithDecription.size()) {
+            return null;
+        }
         return singleton.locationsWithDecription.get(index);
     }
 
