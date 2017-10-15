@@ -32,7 +32,6 @@ public class LocationDisplayerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
     }
 
-    @Override
     protected void onAttach(Context context) {
         FragmentManager fragMan = getSupportFragmentManager();
         FragmentTransaction fragTransaction = fragMan.beginTransaction();
