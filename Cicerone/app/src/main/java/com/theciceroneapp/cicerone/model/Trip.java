@@ -260,8 +260,8 @@ public class Trip {
         APIHelper.getLocations(radius, modes, lPromise);
     }
 
-    public void stopTrip() {
-        tripGoing = false;
+    public static void stopTrip() {
+        singleton.tripGoing = false;
         TripService.stop();
     }
 
