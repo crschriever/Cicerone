@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.theciceroneapp.cicerone.R;
+import com.theciceroneapp.cicerone.model.Location;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,7 +22,7 @@ import com.theciceroneapp.cicerone.R;
 public class LocationFragment extends Fragment {
     private static final String ARG_LOCATION = "ARG_LOCATION";
 
-    private int mLocation;
+    private int mLocationIndex;
 
     private OnFragmentInteractionListener mListener;
 
@@ -33,13 +34,13 @@ public class LocationFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param location index needed from trip
+     * @param locationIndex index needed from trip
      * @return A new instance of fragment LocationFragment.
      */
-    public static LocationFragment newInstance(int location) {
+    public static LocationFragment newInstance(int locationIndex) {
         Bundle args = new Bundle();
 
-        args.putInt(ARG_LOCATION, location);
+        args.putInt(ARG_LOCATION, locationIndex);
 
         LocationFragment fragment = new LocationFragment();
 
@@ -51,7 +52,7 @@ public class LocationFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mLocation = getArguments().getInt(ARG_LOCATION);
+            mLocationIndex = getArguments().getInt(ARG_LOCATION);
         }
     }
 
