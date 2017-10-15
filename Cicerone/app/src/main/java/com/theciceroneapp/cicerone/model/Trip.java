@@ -30,24 +30,24 @@ public class Trip {
     private final TalkPromise tPromise;
     private final InformationPromise dPromise;
 
-    private double radius = 500;
-    private final int MAX_RADIUS_WALKING = 700;
-    private final int MIN_RADIUS_WALKING = 50;
+    private double radius = 350;
+    private final int MAX_RADIUS_WALKING = 600;
+    private final int MIN_RADIUS_WALKING = 30;
     private final float RADIUS_CHANGE_WALKING = .25f;
-    private final int AFTER_SPEECH_WAIT_WALKING = 1000;
-    private final int FAILED_FIND_WAIT_WALKING = 5000;
+    private final int AFTER_SPEECH_WAIT_WALKING = 2000;
+    private final int FAILED_FIND_WAIT_WALKING = 10000;
 
     private final int MAX_RADIUS_RIDING = 5000;
     private final int MIN_RADIUS_RIDING = 200;
     private final float RADIUS_CHANGE_RIDING = .25f;
-    private final int AFTER_SPEECH_WAIT_RIDING = 10000;
-    private final int FAILED_FIND_WAIT_RIDING = 5000;
+    private final int AFTER_SPEECH_WAIT_RIDING = 3000;
+    private final int FAILED_FIND_WAIT_RIDING = 10000;
 
-    private final int MAX_RADIUS_FLYING = 5000;
+    private final int MAX_RADIUS_FLYING = 10000;
     private final int MIN_RADIUS_FLYING = 200;
     private final float RADIUS_CHANGE_FLYING = .25f;
     private final int AFTER_SPEECH_WAIT_FLYING = 10000;
-    private final int FAILED_FIND_WAIT_FLYING = 5000;
+    private final int FAILED_FIND_WAIT_FLYING = 15000;
 
     private final int LOCALITY_REFRESH = 30000;
 
