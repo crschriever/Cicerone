@@ -3,6 +3,9 @@ package com.theciceroneapp.cicerone.model;
 import android.app.Service;
 import android.widget.ListAdapter;
 
+import com.theciceroneapp.cicerone.controller.TripChangeListener;
+import com.theciceroneapp.cicerone.controller.TripHomeActivity;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -57,6 +60,7 @@ public class Trip {
     public boolean tripGoing = true;
 
     private static Trip singleton;
+    private static TripChangeListener tripChangeListener;
 
     public Trip(ArrayList<Mode> modeList, int modeTravel) {
         singleton = this;
@@ -178,6 +182,7 @@ public class Trip {
                 }
                 if (!text.equals("")) {
                     locationsWithDecription.add(location);
+                    tripChangeListener.newMostRecentLocation(location);
                     TripService.say(text, tPromise);
                 } else {
                     APIHelper.getLocations(radius, modes, lPromise);
@@ -224,7 +229,7 @@ public class Trip {
                 if (locations[0].getTypes().contains("locality")) {
                     if (currentLocality == null || currentLocality.equals(locations[0])) {
                         currentLocality = locations[0];
-                        //TODO update locality
+                        tripChangeListener.newLocality(currentLocality);
                     }
                 }
             }
@@ -252,8 +257,16 @@ public class Trip {
         TripService.stop();
     }
 
+    public static void setTripChangeListener(TripChangeListener listener) {
+        singleton.tripChangeListener = listener;
+    }
+
     public static Location getMostRecentLocation() {
         return singleton.locationsWithDecription.get(singleton.locationsWithDecription.size() - 1);
+    }
+
+    public static Location getLocale() {
+        return singleton.currentLocality;
     }
 
 }
